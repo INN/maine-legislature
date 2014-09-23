@@ -22,7 +22,7 @@ PROJECT_FILENAME = '$NEW_PROJECT_FILENAME'
 
 # The name of the repository containing the source
 REPOSITORY_NAME = '$NEW_REPOSITORY_NAME'
-GITHUB_USERNAME = 'nprapps'
+GITHUB_USERNAME = 'INN'
 REPOSITORY_URL = 'git@github.com:%s/%s.git' % (GITHUB_USERNAME, REPOSITORY_NAME)
 REPOSITORY_ALT_URL = None # 'git@bitbucket.org:nprapps/%s.git' % REPOSITORY_NAME'
 
@@ -35,29 +35,25 @@ DEPLOYMENT
 """
 PRODUCTION_S3_BUCKETS = [
     {
-        'bucket_name': 'apps.npr.org',
-        'region': 'us-east-1'
-    },
-    {
-        'bucket_name': 'apps2.npr.org',
-        'region': 'us-east-1'
+        'bucket_name': 'apps.investigativenewsnetwork.org',
+        'region': 'us-west-2'
     }
 ]
 
 STAGING_S3_BUCKETS = [
     {
-        'bucket_name': 'stage-apps.npr.org',
-        'region': 'us-east-1'
+        'bucket_name': 'stage-apps.investigativenewsnetwork.org',
+        'region': 'us-west-2'
     }
 ]
 
 ASSETS_S3_BUCKET = {
-    'bucket_name': 'assets.apps.npr.org',
-    'region': 'us-east-1'
+    'bucket_name': 'assets.apps.investigativenewsnetwork.org',
+    'region': 'us-west-2'
 }
 
-PRODUCTION_SERVERS = ['cron.nprapps.org']
-STAGING_SERVERS = ['50.112.92.131']
+PRODUCTION_SERVERS = []
+STAGING_SERVERS = []
 
 # Should code be deployed to the web/cron servers?
 DEPLOY_TO_SERVERS = False
@@ -108,21 +104,10 @@ SHARING
 SHARE_URL = 'http://%s/%s/' % (PRODUCTION_S3_BUCKETS[0], PROJECT_SLUG)
 
 """
-ADS
-"""
-
-NPR_DFP = {
-    'STORY_ID': '1002',
-    'TARGET': 'homepage',
-    'ENVIRONMENT': 'NPRTEST',
-    'TESTSERVER': 'false'
-}
-
-"""
 SERVICES
 """
 GOOGLE_ANALYTICS = {
-    'ACCOUNT_ID': 'UA-5828686-4',
+    'ACCOUNT_ID': 'UA-5828686-4', # TODO: Replace INN's UA code
     'DOMAIN': PRODUCTION_S3_BUCKETS[0],
     'TOPICS': '' # e.g. '[1014,3,1003,1002,1001]'
 }
