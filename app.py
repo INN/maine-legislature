@@ -1,25 +1,29 @@
 #!/usr/bin/env python
+"""
+Example application views.
 
-import json
-
-import argparse
-from flask import Flask, render_template
+Note that `render_template` is wrapped with `make_response` in all application
+routes. While not necessary for most Flask apps, it is required in the
+App Template for static publishing.
+"""
 
 import app_config
-from render_utils import make_context, smarty_filter, urlencode_filter, app_template_url_for
+import json
+import oauth
 import static
 
-app = Flask(__name__, static_folder='www/assets')
+from flask import Flask, make_response, render_template
+from render_utils import make_context, smarty_filter, urlencode_filter
+from werkzeug.debug import DebuggedApplication
 
-# Template filters
-app.jinja_env.filters['smarty'] = smarty_filter
-app.jinja_env.filters['urlencode'] = urlencode_filter
+app = Flask(__name__)
+app.debug = app_config.DEBUG
 
-# Template functions
-app.jinja_env.globals.update(url_for=app_template_url_for)
+app.add_template_filter(smarty_filter, name='smarty')
+app.add_template_filter(urlencode_filter, name='urlencode')
 
-# Example application views
 @app.route('/')
+@oauth.oauth_required
 def index():
     """
     Example view demonstrating rendering a simple HTML page.
@@ -29,39 +33,38 @@ def index():
     with open('data/featured.json') as f:
         context['featured'] = json.load(f)
 
-    return render_template('index.html', **context)
+    return make_response(render_template('index.html', **context))
 
 @app.route('/comments/')
 def comments():
     """
     Full-page comments view.
     """
-    return render_template('comments.html', **make_context())
+    return make_response(render_template('comments.html', **make_context()))
 
 @app.route('/widget.html')
 def widget():
     """
     Embeddable widget example page.
     """
-    return render_template('widget.html', **make_context())
+    return make_response(render_template('widget.html', **make_context()))
 
 @app.route('/test_widget.html')
 def test_widget():
     """
     Example page displaying widget at different embed sizes.
     """
-    return render_template('test_widget.html', **make_context())
+    return make_response(render_template('test_widget.html', **make_context()))
 
 app.register_blueprint(static.static)
+app.register_blueprint(oauth.oauth)
 
-# Boilerplate
+# Enable Werkzeug debug pages
+if app_config.DEBUG:
+    wsgi_app = DebuggedApplication(app, evalex=False)
+else:
+    wsgi_app = app
+
+# Catch attempts to run the app directly
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-p', '--port')
-    args = parser.parse_args()
-    server_port = 8000
-
-    if args.port:
-        server_port = int(args.port)
-
-    app.run(host='0.0.0.0', port=server_port, debug=app_config.DEBUG)
+    print 'This command has been removed! Please run "fab app" instead!'

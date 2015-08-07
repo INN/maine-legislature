@@ -7,7 +7,6 @@ Commands related to the syncing assets.
 from glob import glob
 import os
 
-import boto
 from fabric.api import prompt, task
 import app_config
 from fnmatch import fnmatch
@@ -58,7 +57,7 @@ def sync():
 
         return
 
-    bucket = _assets_get_bucket()
+    bucket = utils.get_bucket(app_config.ASSETS_S3_BUCKET)
     keys = bucket.list(app_config.ASSETS_SLUG)
 
     which = None
@@ -174,14 +173,6 @@ def rm(path):
             key = bucket.get_key(key_name)
 
             _assets_delete(local_path, key)
-
-def _assets_get_bucket():
-    """
-    Get a reference to the assets bucket.
-    """
-    s3 = boto.connect_s3()
-
-    return s3.get_bucket(app_config.ASSETS_S3_BUCKET['bucket_name'])
 
 def _assets_confirm(local_path):
     """

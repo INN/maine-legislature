@@ -31,11 +31,13 @@ def setup():
 
         return
 
+    install_google_oauth_creds()
     create_directories()
     create_virtualenv()
     clone_repo()
     checkout_latest()
     install_requirements()
+    setup_logs()
 
 def create_directories():
     """
@@ -52,7 +54,7 @@ def create_virtualenv():
     """
     require('settings', provided_by=['production', 'staging'])
 
-    run('virtualenv -p %(SERVER_PYTHON)s --no-site-packages %(SERVER_VIRTUALENV_PATH)s' % app_config.__dict__)
+    run('virtualenv -p %(SERVER_PYTHON)s %(SERVER_VIRTUALENV_PATH)s' % app_config.__dict__)
     run('source %(SERVER_VIRTUALENV_PATH)s/bin/activate' % app_config.__dict__)
 
 def clone_repo():
@@ -88,6 +90,16 @@ def install_requirements():
     run('cd %(SERVER_REPOSITORY_PATH)s; npm install' % app_config.__dict__) 
 
 @task
+def setup_logs():
+    """
+    Create log directories.
+    """
+    require('settings', provided_by=['production', 'staging'])
+
+    sudo('mkdir %(SERVER_LOG_PATH)s' % app_config.__dict__)
+    sudo('chown ubuntu:ubuntu %(SERVER_LOG_PATH)s' % app_config.__dict__)
+
+@task
 def install_crontab():
     """
     Install cron jobs script into cron.d.
@@ -104,6 +116,22 @@ def uninstall_crontab():
     require('settings', provided_by=['production', 'staging'])
 
     sudo('rm /etc/cron.d/%(PROJECT_FILENAME)s' % app_config.__dict__)
+
+@task
+def install_google_oauth_creds():
+    """
+    Install Google Oauth credentials file (global) from workinprivate repo
+    """
+    run('git clone git@github.com:nprapps/workinprivate.git /tmp/workinprivate-tmp')
+    run('cp /tmp/workinprivate-tmp/.google_oauth_credentials %s' % app_config.GOOGLE_OAUTH_CREDENTIALS_PATH)
+    run('rm -Rf /tmp/workinprivate-tmp')
+
+@task
+def remove_google_oauth_creds():
+    """
+    Remove Google oauth credentials file (global)
+    """
+    run('rm %s' % app_config.GOOGLE_OAUTH_CREDENTIALS_PATH)
 
 def delete_project():
     """
@@ -196,14 +224,6 @@ def deploy_confs():
                     run('touch %s' % app_config.UWSGI_SOCKET_PATH)
                     sudo('chmod 644 %s' % app_config.UWSGI_SOCKET_PATH)
                     sudo('chown www-data:www-data %s' % app_config.UWSGI_SOCKET_PATH)
-
-                    sudo('touch %s' % app_config.UWSGI_LOG_PATH)
-                    sudo('chmod 644 %s' % app_config.UWSGI_LOG_PATH)
-                    sudo('chown ubuntu:ubuntu %s' % app_config.UWSGI_LOG_PATH)
-
-                    sudo('touch %s' % app_config.APP_LOG_PATH)
-                    sudo('chmod 644 %s' % app_config.APP_LOG_PATH)
-                    sudo('chown ubuntu:ubuntu %s' % app_config.APP_LOG_PATH)
             else:
                 print '%s has not changed' % rendered_path
 
@@ -229,8 +249,6 @@ def nuke_confs():
                 sudo('initctl reload-configuration')
             elif service == 'app':
                 sudo('rm %s' % app_config.UWSGI_SOCKET_PATH)
-                sudo('rm %s' % app_config.UWSGI_LOG_PATH)
-                sudo('rm %s' % app_config.APP_LOG_PATH)
 
 """
 Fabcasting
@@ -245,7 +263,7 @@ def fabcast(command):
     require('settings', provided_by=['production', 'staging'])
 
     if not app_config.DEPLOY_TO_SERVERS:
-        print 'You must set DEPLOY_TO_SERVERS = True in your app_config.py and setup a server before fabcasting..'
+        print 'You must set DEPLOY_TO_SERVERS = True in your app_config.py and setup a server before fabcasting.'
 
     run('cd %s && bash run_on_server.sh fab %s $DEPLOYMENT_TARGET %s' % (app_config.SERVER_REPOSITORY_PATH, env.branch, command))
 
