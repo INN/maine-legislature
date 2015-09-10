@@ -90,7 +90,7 @@ DEBUG = True
 COPY EDITING
 """
 COPY_GOOGLE_DOC_KEY = '1VqmQqNeyelmLixiAfP47jY2TTvnVs6r69vKpQw_9Gi0'
-COPY_PATH = 'data/copy-3.xlsx'
+COPY_PATH = 'data/Maine Legislature COPY.xlsx'
 
 """
 SHARING
