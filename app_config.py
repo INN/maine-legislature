@@ -27,7 +27,7 @@ PROJECT_FILENAME = 'maine_legislature'
 # The name of the repository containing the source
 REPOSITORY_NAME = 'maine-legislature'
 GITHUB_USERNAME = 'INN'
-REPOSITORY_URL = 'git@github.com:INN/maine-legislature.git'
+REPOSITORY_URL = 'git@github.com:%s/%s.git' % (GITHUB_USERNAME, REPOSITORY_NAME)
 REPOSITORY_ALT_URL = None # 'git@bitbucket.org:nprapps/%s.git' % REPOSITORY_NAME'
 
 # Project name used for assets rig
@@ -89,8 +89,8 @@ DEBUG = True
 """
 COPY EDITING
 """
-COPY_GOOGLE_DOC_KEY = '0AlXMOHKxzQVRdHZuX1UycXplRlBfLVB0UVNldHJYZmc'
-COPY_PATH = 'data/copy.xlsx'
+COPY_GOOGLE_DOC_KEY = '1VqmQqNeyelmLixiAfP47jY2TTvnVs6r69vKpQw_9Gi0'
+COPY_PATH = 'data/copy-3.xlsx'
 
 """
 SHARING
