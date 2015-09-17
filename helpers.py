@@ -1,0 +1,35 @@
+# Helper functions for the Maine Legislature project
+import app_config
+import copytext
+import re
+
+from render_utils import make_context
+from unicodedata import normalize
+
+_punct_re = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
+
+def get_legislators():
+    context = make_context()
+    COPY = context['COPY']
+    senators = COPY['senators']
+    reps = COPY['house_reps']
+    legislators = senators
+    return legislators
+
+def rep_sen(id):
+    if id.startswith( 's' ):
+        return u"Sen."
+    elif id.startswith( 'h' ):
+        return u"Rep."
+    else:
+        return ''
+
+# Other helpers
+def slugify(text, delim=u'-'):
+    """Generates an slightly worse ASCII-only slug."""
+    result = []
+    for word in _punct_re.split(text.lower()):
+        word = normalize('NFKD', word).encode('ascii', 'ignore')
+        if word:
+            result.append(word)
+    return unicode(delim.join(result))

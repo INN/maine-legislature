@@ -16,11 +16,15 @@ from flask import Flask, make_response, render_template
 from render_utils import make_context, smarty_filter, urlencode_filter
 from werkzeug.debug import DebuggedApplication
 
+from helpers import get_legislators, slugify, rep_sen
+
 app = Flask(__name__)
 app.debug = app_config.DEBUG
 
 app.add_template_filter(smarty_filter, name='smarty')
 app.add_template_filter(urlencode_filter, name='urlencode')
+app.jinja_env.filters['slugify'] = slugify
+app.jinja_env.filters['rep_sen'] = rep_sen
 
 @app.route('/')
 @oauth.oauth_required
@@ -29,6 +33,7 @@ def index():
     Example view demonstrating rendering a simple HTML page.
     """
     context = make_context()
+    context['legislators'] = get_legislators()
 
     with open('data/featured.json') as f:
         context['featured'] = json.load(f)
