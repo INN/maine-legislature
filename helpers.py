@@ -14,6 +14,9 @@ def get_legislators():
     senators = COPY['senators']
     reps = COPY['house_reps']
     legislators = senators
+    # This is probably safe, but will fail if the variable name changes for
+    # the list of rows that copytext uses within the Sheet object.
+    legislators._sheet = legislators._sheet + reps._sheet
     return legislators
 
 def rep_sen(id):
