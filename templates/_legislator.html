@@ -2,8 +2,7 @@
     <div class="leg-image-container">
     </div>
     <div class="leg-details {{ legislator['id'] }}">
-        <h1>{{ legislator['name'] }}</h1>
-        
+        <h1>{{ legislator['id']|rep_sen }} {{ legislator['name'] }}</h1>
         <p class="home-city">{{ legislator['home_city'] }}</p>
         <p class="home-zip">{{ legislator['home_zip']|format_zip }}</p>
         <p class="representing-zip">{{ legislator['district_number']|format_district }}</p>
