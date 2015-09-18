@@ -16,7 +16,7 @@ from flask import Flask, make_response, render_template
 from render_utils import make_context, smarty_filter, urlencode_filter
 from werkzeug.debug import DebuggedApplication
 
-from helpers import get_legislators, get_legislator_slugs, get_legislator_by_slug, slugify, rep_sen
+from helpers import get_legislators, get_legislator_slugs, get_legislator_by_slug, slugify, rep_sen, format_district, format_zip
 
 app = Flask(__name__)
 app.debug = app_config.DEBUG
@@ -25,6 +25,8 @@ app.add_template_filter(smarty_filter, name='smarty')
 app.add_template_filter(urlencode_filter, name='urlencode')
 app.jinja_env.filters['slugify'] = slugify
 app.jinja_env.filters['rep_sen'] = rep_sen
+app.jinja_env.filters['format_district'] = format_district
+app.jinja_env.filters['format_zip'] = format_zip
 
 @app.route('/')
 @oauth.oauth_required

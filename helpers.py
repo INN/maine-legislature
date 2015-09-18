@@ -41,6 +41,22 @@ def rep_sen(id):
     else:
         return ''
 
+def format_district(district):
+    try:
+        float(district)
+        return u"District " + district
+    except ValueError:
+        return district
+
+def format_zip(zip):
+    try:
+        zip =  zip.striptags()
+        #stripzero = re.sub(u'.0', u'')
+        zip = zip.replace('.0', '')
+        return u"0" + zip
+    except ValueError:
+        return zip
+
 # Other helpers
 def slugify(text, delim=u'-'):
     """Generates an slightly worse ASCII-only slug."""

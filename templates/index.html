@@ -11,7 +11,7 @@
             <a href="legislator/{{ legislator.name|slugify }}">
                 <img src="img/{{ legislator.name|slugify }}"/>
                 <span class="name">{{ legislator.id|rep_sen }} {{ legislator.name }}</span>
-                <span class="district">{{ legislator.district_number }}</span>
+                <span class="district">{{ legislator.district_number|format_district }}</span>
                 <span class="party">{{ legislator.party }}</span>
                 <span class="town">{{ legislator.home_city }}</span>
             </a>
