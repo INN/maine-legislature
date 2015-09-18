@@ -28,10 +28,13 @@ def get_legislator_slugs():
 
 def get_legislator_by_slug(slug):
     legislators = get_legislators()
+    leg = None
     for legislator in legislators:
         if slugify(legislator['name']) == slug:
-            return legislator
-    endfor
+            leg = legislator
+            break
+
+    return leg
 
 def rep_sen(id):
     if id.startswith( 's' ):

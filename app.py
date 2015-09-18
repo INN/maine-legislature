@@ -47,7 +47,13 @@ for slug in legislator_slugs:
     @app.route('/legislator/%s/' % slug, endpoint=slug)
     def legislator():
         context = make_context()
+
+        from flask import request
+        slug = request.path.split('/')[2]
+
         context['legislator'] = get_legislator_by_slug(slug)
+        print slug
+        print context['legislator']['name']
         with open('data/featured.json') as f:
             context['featured'] = json.load(f)
 
