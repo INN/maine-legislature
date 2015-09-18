@@ -1,0 +1,7 @@
+<ul class="committees">
+{% for position in COPY.committees%}
+    {% if position.sh_number == legislator.id %}
+    <li>{{ position.committee }}</li>
+    {% endif %}
+{% endfor %}
+</ul>
