@@ -19,6 +19,20 @@ def get_legislators():
     legislators._sheet = legislators._sheet + reps._sheet
     return legislators
 
+def get_legislator_slugs():
+    legislators = get_legislators()
+    slugs = []
+    for legislator in legislators:
+        slugs.append(slugify(legislator['name']))
+    return slugs
+
+def get_legislator_by_slug(slug):
+    legislators = get_legislators()
+    for legislator in legislators:
+        if slugify(legislator['name']) == slug:
+            return legislator
+    endfor
+
 def rep_sen(id):
     if id.startswith( 's' ):
         return u"Sen."

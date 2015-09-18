@@ -16,7 +16,7 @@ from flask import Flask, make_response, render_template
 from render_utils import make_context, smarty_filter, urlencode_filter
 from werkzeug.debug import DebuggedApplication
 
-from helpers import get_legislators, slugify, rep_sen
+from helpers import get_legislators, get_legislator_slugs, get_legislator_by_slug, slugify, rep_sen
 
 app = Flask(__name__)
 app.debug = app_config.DEBUG
@@ -39,6 +39,17 @@ def index():
         context['featured'] = json.load(f)
 
     return make_response(render_template('index.html', **context))
+
+legislator_slugs = get_legislator_slugs()
+for slug in legislator_slugs:
+    @app.route('/legislator/%s/' % slug, endpoint=slug)
+    def legislator():
+        context = make_context()
+        context['legislator'] = get_legislator_by_slug(slug)
+        with open('data/featured.json') as f:
+            context['featured'] = json.load(f)
+
+        return make_response(render_template('legislator.html', **context))
 
 @app.route('/comments/')
 def comments():
