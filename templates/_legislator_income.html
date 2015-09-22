@@ -1,0 +1,8 @@
+<h5>Income</h5>
+<ul class="income income-from-employment">
+{% for income_type in income %}
+    {% for income_particular in income[income_type] %}
+        <li>{{ income_particular }}</li>
+    {% endfor %}
+{% endfor %}
+</ul>
