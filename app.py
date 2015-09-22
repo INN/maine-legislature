@@ -47,7 +47,6 @@ for slug in legislator_slugs:
     @app.route('/legislator/%s/' % slug, endpoint=slug)
     def legislator():
         context = make_context()
-        print context['COPY'].json()
 
         from flask import request
         slug = request.path.split('/')[2]
