@@ -52,8 +52,6 @@ for slug in legislator_slugs:
         slug = request.path.split('/')[2]
 
         context['legislator'] = get_legislator_by_slug(slug)
-        print slug
-        print context['legislator']['name']
         with open('data/featured.json') as f:
             context['featured'] = json.load(f)
 
