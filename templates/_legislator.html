@@ -9,8 +9,7 @@
         <p class="representing-zip">{{ legislator['district_number']|format_district }}</p>
         {% include '_legislator_committees.html' %}
         {% include '_legislator_income.html' %}
-        <p class="todo">sources of income form employment</p>
-        <p class="todo">sources of income form other sources</p>
+        {% include '_legislator_positions.html' %}
         <p class="todo">family members' employment</p>
         <p class="todo">Bills sponsored</p>
     </div>

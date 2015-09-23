@@ -1,0 +1,8 @@
+<h5>Positions</h5>
+<ul class="positions">
+{% for position_type in positions %}
+    {% for position_particular in positions[position_type] %}
+        <li>{{ position_particular }}</li>
+    {% endfor %}
+{% endfor %}
+</ul>
