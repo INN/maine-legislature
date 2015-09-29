@@ -65,7 +65,7 @@ def get_legislator_income_by_slug(slug):
                 income['honoraria'] = []
 
             if row['Source_of_Honoraria'] != '':
-                income['honoraria'].append(row['Source_of_Honoraria'] + '(honorarium)')
+                income['honoraria'].append(row['Source_of_Honoraria'] + ' (honorarium)')
 
     for row in COPY['loans']:
         if row['sh_number'] == leg_id:
@@ -184,7 +184,7 @@ def get_legislator_positions_by_slug(slug):
             except KeyError:
                 positions['position_org'] = []
 
-            # this should check row['Relationship_to_Legislator'] to make sure it's self
+            # this checks row['Relationship_to_Legislator'] to make sure it's self
             # otherwise, this goes in family member positions
             if str(row['Relationship_to_Legislator']).lower() == 'self':
                 line = row['Title_in_Organization'] + ', ' + \
@@ -196,6 +196,72 @@ def get_legislator_positions_by_slug(slug):
                 positions['position_org'].append(line)
 
     return positions
+
+def get_legislator_family_by_slug(slug):
+    context = make_context()
+    COPY = context['COPY']
+    family = {}
+    leg_id = get_legislator_id_by_slug(slug)
+
+    for row in COPY['position_org']:
+        if row['sh_number'] == leg_id:
+            try:
+                family['position_org']
+            except KeyError:
+                family['position_org'] = []
+
+            # this checks row['Relationship_to_Legislator'] to make sure it's a family
+            # otherwise, this goes in family member positions
+            if str(row['Relationship_to_Legislator']).lower() == 'spouse': # The values used here are spouse and self
+                line = row['Name_of_Position_Holder'] + \
+                    " (%s), " % str(row['Relationship_to_Legislator']).lower() + \
+                    row['Title_in_Organization'] + ', ' + \
+                    row['Organization'] + ', ' + \
+                    row['City_of_Organization'] + ', ' + \
+                    format_zip(row['Zip_of_Organization'])
+                if str(row['Compensated']).lower() == 'yes':
+                    line += ' (paid position)'
+                family['position_org'].append(line)
+
+    for row in COPY['family_income_compensation']:
+        if row['sh_number'] == leg_id:
+            try:
+                family['family_income_compensation']
+            except KeyError:
+                family['family_income_compensation'] = []
+
+            if str(row['Name_of_family_member']).lower() != '':
+                line = row['Name_of_family_member']
+                if str(row['Position_of_family_member']) != '':
+                    line += ', ' + row['Position_of_family_member']
+                if str(row['Family_Member_Employers_Name']) != '':
+                    line += ', ' + row['Family_Member_Employers_Name']
+                if str(row['Employers_City']) != '':
+                    line += ', ' + row['Employers_City']
+                if str(row['Employers_Zip']) != '':
+                    line += ', ' + format_zip(row['Employers_Zip'])
+                family['family_income_compensation'].append(line)
+
+    for row in COPY['family_other_income']:
+        if row['sh_number'] == leg_id:
+            try:
+                family['family_other_income']
+            except KeyError:
+                family['family_other_income'] = []
+
+            if str(row['Name_of_spouse']) != '': # This column is also used for other family members
+                line = row['Name_of_spouse']
+                if str(row['Source_of_family_member_income']) != '':
+                    line += ', ' +  row['Source_of_family_member_income']
+                if str(row['City_of_other_source']) != '':
+                    line += ', ' +  row['City_of_other_source']
+                if str(row['Zip_of_other_source']) != '':
+                    line += ', ' +  format_zip(row['Zip_of_other_source'])
+                if str(row['Type_of_Income']) != '':
+                    line += ' (%s)' % row['Type_of_Income']
+                family['family_other_income'].append(line)
+
+    return family
 
 def rep_sen(id):
     if id.startswith( 's' ):

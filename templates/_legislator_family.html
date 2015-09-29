@@ -1,0 +1,8 @@
+<h5>Family Member Positions and Sources of Income</h5>
+<ul class="positions">
+{% for family_data in family %}
+    {% for family_datum in family[family_data] %}
+        <li>{{ family_datum }}</li>
+    {% endfor %}
+{% endfor %}
+</ul>

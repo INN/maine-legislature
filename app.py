@@ -54,6 +54,7 @@ for slug in legislator_slugs:
         context['legislator'] = get_legislator_by_slug(slug)
         context['income'] = get_legislator_income_by_slug(slug)
         context['positions'] = get_legislator_positions_by_slug(slug)
+        context['family'] = get_legislator_family_by_slug(slug)
         with open('data/featured.json') as f:
             context['featured'] = json.load(f)
 
