@@ -2,7 +2,7 @@
 <ul class="income income-from-employment">
 {% for income_type in income %}
     {% for income_particular in income[income_type] %}
-        <li>{{ income_particular }}</li>
+        <li data-sheet="{{income_type}}">{{ income_particular }}</li>
     {% endfor %}
 {% endfor %}
 </ul>

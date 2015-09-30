@@ -2,7 +2,7 @@
 <ul class="positions">
 {% for family_data in family %}
     {% for family_datum in family[family_data] %}
-        <li>{{ family_datum }}</li>
+        <li data-sheet="{{family_data}}">{{ family_datum }}</li>
     {% endfor %}
 {% endfor %}
 </ul>
