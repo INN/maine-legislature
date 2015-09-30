@@ -172,10 +172,12 @@ def get_legislator_positions_by_slug(slug):
                 positions['position_political'] = []
 
             if row['Name_of_Committee'] != '':
-                positions['position_political'].append(
-                    row['Title_in_Committee'] + ', ' +
-                    row['Name_of_Committee']
-                )
+                if row['Name_of_Official'] == '':
+                    # the official is the legislator, per https://github.com/INN/maine-legislature/issues/68
+                    positions['position_political'].append(
+                        row['Title_in_Committee'] + ', ' +
+                        row['Name_of_Committee']
+                    )
 
     for row in COPY['position_org']:
         if row['sh_number'] == leg_id:
@@ -260,6 +262,22 @@ def get_legislator_family_by_slug(slug):
                 if str(row['Type_of_Income']) != '':
                     line += ' (%s)' % row['Type_of_Income']
                 family['family_other_income'].append(line)
+
+    for row in COPY['position_political']:
+        if row['sh_number'] == leg_id:
+            try:
+                family['position_political']
+            except KeyError:
+                family['position_political'] = []
+
+            if row['Name_of_Committee'] != '':
+                if row['Name_of_Official'] != '':
+                    # the official is the legislator, per https://github.com/INN/maine-legislature/issues/68
+                    family['position_political'].append(
+                        row['Name_of_Official'] + ', ' +
+                        row['Title_in_Committee'] + ', ' +
+                        row['Name_of_Committee']
+                    )
 
     return family
 
