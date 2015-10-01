@@ -9,7 +9,7 @@
     {% for legislator in legislators %}
         <div class="legislator {{ legislator.id|rep_sen|slugify }}">
             <a href="legislator/{{ legislator.name|slugify }}">
-                <img src="img/{{ legislator.name|slugify }}"/>
+                <img data-src="img/{{ legislator.id }}.jpg"/>
                 <span class="name">{{ legislator.id|rep_sen }} {{ legislator.name }}</span>
                 <span class="district">{{ legislator.district_number|format_district }}</span>
                 <span class="party">{{ legislator.party }}</span>
