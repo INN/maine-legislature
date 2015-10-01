@@ -1,0 +1,10 @@
+<h3>Bills sponsored</h3>
+<ul class="bills">
+{#
+{% for bill in COPY.bills %}
+    {% if bill.sh_number == legislator_id %}
+    <li>{{ bill.title }}</li>
+    {$ endif %}
+{% endfor %}
+#}
+</ul>
