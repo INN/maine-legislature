@@ -1,8 +1,10 @@
-<h5>Personal income</h5>
-<ul class="income income-from-employment">
-{% for income_type in income %}
-    {% for income_particular in income[income_type] %}
-        <li data-sheet="{{income_type}}">{{ income_particular }}</li>
+{% if income|is_really_iterable == True %}
+    <h5>Personal income</h5>
+    <ul class="income income-from-employment">
+    {% for income_type in income %}
+        {% for income_particular in income[income_type] %}
+            <li data-sheet="{{income_type}}">{{ income_particular }}</li>
+        {% endfor %}
     {% endfor %}
-{% endfor %}
-</ul>
+    </ul>
+{% endif %}

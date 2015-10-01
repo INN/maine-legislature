@@ -1,8 +1,10 @@
-<h5>Non-governmental positions</h5>
-<ul class="positions">
-{% for position_type in positions %}
-    {% for position_particular in positions[position_type] %}
-        <li data-sheet="{{ position_type }}">{{ position_particular }}</li>
+{% if positions|is_really_iterable == True %}
+    <h5>Non-governmental positions</h5>
+    <ul class="positions">
+    {% for position_type in positions %}
+        {% for position_particular in positions[position_type] %}
+            <li data-sheet="{{ position_type }}">{{ position_particular }}</li>
+        {% endfor %}
     {% endfor %}
-{% endfor %}
-</ul>
+    </ul>
+{% endif %}

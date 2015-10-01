@@ -314,3 +314,18 @@ def slugify(text, delim=u'-'):
         if word:
             result.append(word)
     return unicode(delim.join(result))
+
+def is_really_iterable(var):
+    if not hasattr(var, '__iter__'):
+        return False
+
+    count = 0
+    for k in var:
+        if hasattr(var[k], '__iter__'):
+            for j in var[k]:
+                count += 1
+
+    if count >= 1:
+        return True
+    else:
+        return False
