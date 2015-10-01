@@ -296,7 +296,12 @@ def format_district(district):
     except ValueError:
         return district
 
+# Not actually used anymore, since we removed the zip codes from display.
+# Please test the first two lines against "01234-4567": it should not return "001234-4567"
 def format_zip(zip):
+    if type(zip) == str:
+        return zip
+
     try:
         zip = str(zip)
         #stripzero = re.sub(u'.0', u'')
