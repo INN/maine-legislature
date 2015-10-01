@@ -4,7 +4,7 @@
     <div class="leg-details {{ legislator['id'] }}">
         <h1>{{ legislator['id']|rep_sen }} {{ legislator['name'] }}</h1>
         <div class="personal-details">
-            <img src="img/{{ legislator.id }}.jpg"/>
+            <img data-src="img/{{ legislator.id }}.jpg"/>
             <p class="party">{{ legislator['party'] }}</p>
             <p class="home-city">{{ legislator['home_city'] }}</p>
             <p class="representing-district">{{ legislator['district_number']|format_district }}</p>
