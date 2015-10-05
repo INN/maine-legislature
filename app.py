@@ -62,6 +62,22 @@ for slug in legislator_slugs:
 
         return make_response(render_template('legislator.html', **context))
 
+for slug in legislator_slugs:
+    @app.route('/embed/legislator/%s/' % slug, endpoint=slug)
+    def legislator_embed():
+        context = make_context()
+
+        from flask import request
+        slug = request.path.split('/')[2]
+
+        context['legislator'] = get_legislator_by_slug(slug)
+        context['income'] = get_legislator_income_by_slug(slug)
+        context['positions'] = get_legislator_positions_by_slug(slug)
+        context['family'] = get_legislator_family_by_slug(slug)
+        with open('data/featured.json') as f:
+            context['featured'] = json.load(f)
+        return make_response(render_template('embed_legislator.html', **context))
+
 @app.route('/comments/')
 def comments():
     """
