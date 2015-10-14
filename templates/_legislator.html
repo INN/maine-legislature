@@ -1,19 +1,23 @@
 <div class="legislator {{ legislator['id'] }}">
-    <div class="leg-image-container">
-    </div>
     <div class="leg-details {{ legislator['id'] }}">
-        <h1>{{ legislator['id']|rep_sen }} {{ legislator['name'] }}</h1>
         <div class="personal-details">
-            <img data-src="img/{{ legislator.id }}.jpg"/>
+            <div class="leg-image-container">
+                <img src="/assets/{{ legislator.id }}.jpg"/>
+            </div>
+            <h1>{{ legislator['id']|rep_sen }} {{ legislator['name'] }}</h1>
             <p class="party">{{ legislator['party'] }}</p>
             <p class="home-city">{{ legislator['home_city'] }}</p>
             <p class="representing-district">{{ legislator['district_number']|format_district }}</p>
         </div>
-        {% include '_legislator_committees.html' %}
-        {% include '_legislator_income.html' %}
-        {% include '_legislator_positions.html' %}
-        {% include '_legislator_family.html' %}
-        {% include '_legislator_bills.html' %}
+        <div class="col-left">
+            {% include '_legislator_committees.html' %}
+            {% include '_legislator_income.html' %}
+            {% include '_legislator_positions.html' %}
+            {% include '_legislator_family.html' %}
+        </div>
+        <div class="col-right">
+            {% include '_legislator_bills.html' %}
+        </div>
     </div>
 
 </div>

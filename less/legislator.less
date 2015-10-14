@@ -1,0 +1,51 @@
+// Legislator-specific styles
+
+// Bills
+.bills {
+	li {
+		margin-bottom: 1em;
+	}
+}
+.bill-title {
+	display: block;
+}
+.bill-type {
+	font-size: 0.8em;
+	display: inline-block;
+	margin-right: 2em;
+}
+.bill-link-out {
+	font-size: 0.8em;
+	display: inline-block;
+	clear: none
+}
+
+@media (max-width: 768px) {
+	.leg-image-container {
+		text-align: center;
+		img {
+			display: inline-block;
+		}
+	}
+}
+@media (min-width: 769px) {
+	.leg-image-container {
+		float: left;
+		margin-right: 2em;
+	}
+	.col-left, .col-right {
+		margin-top: 3em;
+	}
+	.col-left {
+		width: 45%;
+		float: left;
+		clear: left;
+	}
+	.col-right {
+		width: 45%;
+		float: right;
+		h3 {
+			margin-top: 0;
+		}
+	}
+}
