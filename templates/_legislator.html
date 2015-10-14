@@ -1,9 +1,9 @@
 <div class="legislator {{ legislator['id'] }}">
     <div class="leg-details {{ legislator['id'] }}">
+        <div class="leg-image-container">
+            <img src="/assets/{{ legislator.id }}.jpg"/>
+        </div>
         <div class="personal-details">
-            <div class="leg-image-container">
-                <img src="/assets/{{ legislator.id }}.jpg"/>
-            </div>
             <h1>{{ legislator['id']|rep_sen }} {{ legislator['name'] }}</h1>
             <p>
                 <span class="party">{{ legislator['party'] }}</span>
@@ -15,9 +15,10 @@
             <p>
                 Sponsored {% include '_legislator_bill_count.html' %} pieces of legislation
             </p>
+            {% include '_legislator_committees.html' %}
         </div>
         <div class="col-left">
-            {% include '_legislator_committees.html' %}
+            <h3>Sources of income</h3>
             {% include '_legislator_income.html' %}
             {% include '_legislator_positions.html' %}
             {% include '_legislator_family.html' %}

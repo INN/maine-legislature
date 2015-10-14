@@ -35,14 +35,32 @@
 			display: inline-block;
 		}
 	}
+	h3 {
+		margin-top: 30px;
+	}
 }
 @media (min-width: 769px) {
+	.bills {
+		max-height: 500px;
+		overflow-y: scroll;
+		border: 1px @gray-medium solid;
+		padding: 0 40px;
+	}
 	.leg-image-container {
 		float: left;
 		margin-right: 2em;
 	}
+	.personal-details {
+		float: left;
+		h1 {
+			margin-top: 0;
+		}
+	}
 	.col-left, .col-right {
 		margin-top: 3em;
+		h3 {
+			margin-top: 0;
+		}
 	}
 	.col-left {
 		width: 45%;
@@ -52,8 +70,5 @@
 	.col-right {
 		width: 45%;
 		float: right;
-		h3 {
-			margin-top: 0;
-		}
 	}
 }
