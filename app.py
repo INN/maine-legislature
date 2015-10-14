@@ -16,7 +16,7 @@ from render_utils import make_context, smarty_filter, urlencode_filter
 from werkzeug.debug import DebuggedApplication
 
 from helpers import slugify, rep_sen, format_district, format_zip, \
-    is_really_iterable, get_legislator_slugs, \
+    is_really_iterable, get_legislator_slugs, leg_bills_count, \
     get_legislator_by_slug, get_legislator_income_by_slug, \
     get_legislator_positions_by_slug, get_legislator_family_by_slug
 
