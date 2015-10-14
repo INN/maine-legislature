@@ -21,11 +21,15 @@
 
       $(tab).addClass('active');
 
+      $('img.lazy').lazyload();
+
       return false;
     });
 
     /* On load, show the senate tab */
-    $('[href="#senators-div"]').addClass('active');
-    $('#senators-div').show();
+    //$('[href="#senators-div"]').addClass('active');
+    //$('#senators-div').show();
+
+    $('img.lazy').lazyload();
   });
 })();

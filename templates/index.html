@@ -16,10 +16,10 @@
       <div id="{{ house }}-div" class="tab{% if house == 'senators' %} active{% endif %}">
         {% for legislator in COPY[house] %}
           {% if loop.index == 1 %}<div class="row">{% endif %}
-              <div class="col-md-3 col col-xs-12 legislator {{ legislator.id|rep_sen|slugify }}">
+              <div class="col-md-3 col-sm-6 col-xs-12 legislator {{ legislator.id|rep_sen|slugify }}">
                   <a href="legislator/{{ legislator.name|slugify }}">
                       <div class="legislator-img">
-                        <img src="{{ S3_BASE_URL + '/assets/' + legislator.id + '.jpg' }}"/>
+                        <img class="lazy" data-original="{{ S3_BASE_URL + '/assets/' + legislator.id + '.jpg' }}"/>
                       </div>
                       <span class="name">{{ legislator.id|rep_sen }} {{ legislator.name }}</span>
                       <span class="district">{{ legislator.district_number|format_district }}</span>
@@ -35,5 +35,6 @@
 {% endblock %}
 
 {% block extra_foot_js %}
+  {{ JS.push('js/lib/jquery.lazyload.min.js') }}
   {{ JS.push('js/maine.js') }}
 {% endblock extra_foot_js %}

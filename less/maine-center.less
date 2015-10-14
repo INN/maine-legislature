@@ -5,12 +5,15 @@
 
 /* Title, intro, byline */
 header {
+  background: transparent;
   text-align: center;
 
   .story-description {
     max-width: 720px;
     text-align: left;
-    margin: 20px auto;
+    margin: 20px auto 0 auto;
+    padding-bottom: 20px;
+    border-bottom: 1px solid @med-gray;
   }
 
   .story-meta {
@@ -29,6 +32,7 @@ header {
 .house-selector {
   text-align: center;
   width: 100%;
+  margin-bottom: 32px;
 
   li {
     list-style-type: none;
