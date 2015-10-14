@@ -17,15 +17,17 @@
         {% for legislator in COPY[house] %}
           {% if loop.index == 1 %}<div class="row">{% endif %}
               <div class="col-md-3 col-sm-6 col-xs-12 legislator {{ legislator.id|rep_sen|slugify }}">
-                  <a href="legislator/{{ legislator.name|slugify }}">
-                      <div class="legislator-img">
-                        <img class="lazy" data-original="{{ S3_BASE_URL + '/assets/' + legislator.id + '.jpg' }}"/>
-                      </div>
-                      <span class="name">{{ legislator.id|rep_sen }} {{ legislator.name }}</span>
+                      <a href="legislator/{{ legislator.name|slugify }}">
+                        <div class="legislator-img">
+                          <img class="lazy" data-original="{{ S3_BASE_URL + '/assets/' + legislator.id + '.jpg' }}"/>
+                        </div>
+                      </a>
+                      <a href="legislator/{{ legislator.name|slugify }}">
+                        <span class="name">{{ legislator.id|rep_sen }} {{ legislator.name }}</span>
+                      </a>
                       <span class="district">{{ legislator.district_number|format_district }}</span>
                       <span class="party">{{ legislator.party }}</span>
                       <span class="town">{{ legislator.home_city }}</span>
-                  </a>
               </div>
            {% if loop.index is divisibleby 4 %}</div><div class="row">{% endif %}
            {% if loop.last %}</div>{% endif %}

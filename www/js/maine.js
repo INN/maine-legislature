@@ -26,10 +26,6 @@
       return false;
     });
 
-    /* On load, show the senate tab */
-    //$('[href="#senators-div"]').addClass('active');
-    //$('#senators-div').show();
-
     $('img.lazy').lazyload();
   });
 })();
