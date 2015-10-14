@@ -8,7 +8,6 @@ App Template for static publishing.
 """
 
 import app_config
-import json
 import oauth
 import static
 
@@ -16,7 +15,10 @@ from flask import Flask, make_response, render_template
 from render_utils import make_context, smarty_filter, urlencode_filter
 from werkzeug.debug import DebuggedApplication
 
-from helpers import *
+from helpers import slugify, rep_sen, format_district, format_zip, \
+    is_really_iterable, get_legislator_slugs, \
+    get_legislator_by_slug, get_legislator_income_by_slug, \
+    get_legislator_positions_by_slug, get_legislator_family_by_slug
 
 app = Flask(__name__)
 app.debug = app_config.DEBUG
@@ -31,18 +33,10 @@ app.jinja_env.filters['is_really_iterable'] = is_really_iterable
 
 
 @app.route('/')
-@oauth.oauth_required
 def index():
-    """
-    Example view demonstrating rendering a simple HTML page.
-    """
     context = make_context()
-    context['legislators'] = get_legislators()
-
-    with open('data/featured.json') as f:
-        context['featured'] = json.load(f)
-
     return make_response(render_template('index.html', **context))
+
 
 legislator_slugs = get_legislator_slugs()
 for slug in legislator_slugs:
@@ -57,10 +51,8 @@ for slug in legislator_slugs:
         context['income'] = get_legislator_income_by_slug(slug)
         context['positions'] = get_legislator_positions_by_slug(slug)
         context['family'] = get_legislator_family_by_slug(slug)
-        with open('data/featured.json') as f:
-            context['featured'] = json.load(f)
-
         return make_response(render_template('legislator.html', **context))
+
 
 #legislator_slugs_embed = get_legislator_slugs()
 #for slug in legislator_slugs_embed:
@@ -79,12 +71,6 @@ for slug in legislator_slugs:
 #
 #        return make_response(render_template('embed_legislator.html', **hcontext))
 
-@app.route('/comments/')
-def comments():
-    """
-    Full-page comments view.
-    """
-    return make_response(render_template('comments.html', **make_context()))
 
 @app.route('/widget.html')
 def widget():
@@ -92,6 +78,7 @@ def widget():
     Embeddable widget example page.
     """
     return make_response(render_template('widget.html', **make_context()))
+
 
 @app.route('/test_widget.html')
 def test_widget():

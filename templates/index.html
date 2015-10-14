@@ -4,33 +4,37 @@
 {% include '_maine_legislature_header.html' %}
 {% endblock %}
 
-
 {% block content %}
-    {% for legislator in legislators %}
-        <div class="legislator {{ legislator.id|rep_sen|slugify }}">
-            <a href="legislator/{{ legislator.name|slugify }}">
-                <img data-src="img/{{ legislator.id }}.jpg"/>
-                <span class="name">{{ legislator.id|rep_sen }} {{ legislator.name }}</span>
-                <span class="district">{{ legislator.district_number|format_district }}</span>
-                <span class="party">{{ legislator.party }}</span>
-                <span class="town">{{ legislator.home_city }}</span>
-            </a>
-        </div>
+
+    <div class="house-selector">
+      <ul>
+        <li><a href="#senators-div">Senate</a></li>
+        <li><a href="#house_reps-div">House</a></li>
+      </ul>
+    </div>
+    {% for house in ['senators', 'house_reps'] %}
+      <div id="{{ house }}-div" class="tab">
+        {% for legislator in COPY[house] %}
+          {% if loop.index == 1 %}<div class="row">{% endif %}
+              <div class="col-md-3 col col-xs-12 legislator {{ legislator.id|rep_sen|slugify }}">
+                  <a href="legislator/{{ legislator.name|slugify }}">
+                      <div class="legislator-img">
+                        <img src="{{ S3_BASE_URL + '/assets/' + legislator.id + '.jpg' }}"/>
+                      </div>
+                      <span class="name">{{ legislator.id|rep_sen }} {{ legislator.name }}</span>
+                      <span class="district">{{ legislator.district_number|format_district }}</span>
+                      <span class="party">{{ legislator.party }}</span>
+                      <span class="town">{{ legislator.home_city }}</span>
+                  </a>
+              </div>
+           {% if loop.index is divisibleby 4 %}</div><div class="row">{% endif %}
+           {% if loop.last %}</div>{% endif %}
+        {% endfor %}
+      </div>
     {% endfor %}
 {% endblock %}
 
 {% block leftovers %}
-<!--
-<a class="comment-button comment-button-bubble comment-drawer-toggle" href="javascript:">
-    <span class="comment-count"></span>
-</a>
-
-<a class="comment-button comment-button-article comment-drawer-toggle" data-toggle="modal" data-backdrop="static" data-target="#share-modal">
-    <span class="comment-count"></span>
-    <span class="comment-label">Share / Discuss</span>
-</a>
--->
-
 <h2 class="knockout-example">Example COPY list</h2>
 <dl>
     {% for row in COPY.example_list %}
@@ -48,3 +52,7 @@
     </div>
 </div>
 {% endblock %}
+
+{% block extra_foot_js %}
+  {{ JS.push('js/maine.js') }}
+{% endblock extra_foot_js %}

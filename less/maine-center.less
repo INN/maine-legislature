@@ -1,0 +1,50 @@
+@light-gray: #eee;
+@med-gray: #ccc;
+
+/* Homepage */
+.house-selector {
+  text-align: center;
+  width: 100%;
+
+  li {
+    list-style-type: none;
+    display: inline-block;
+
+    a {
+      padding: 10px;
+      background: @light-gray;
+      border: 1px solid transparent;
+      color: @med-gray;
+
+      &.active {
+        color: @brand-primary;
+        border: 1px solid @med-gray;
+      }
+    }
+  }
+}
+
+/* "Tabbed" house selection */
+.tab {
+  display: none;
+}
+
+.legislator {
+  margin: 20px 0;
+}
+
+.legislator-img {
+  text-align: center;
+  max-width: 280px;
+  max-height: 320px;
+  background: @light-gray;
+  padding: 10px;
+  margin-bottom: 10px;
+
+  img {
+    max-width: 100%;
+    width: auto;
+    max-height: 250px;
+    margin: 0 auto;
+  }
+}
