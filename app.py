@@ -16,7 +16,7 @@ from render_utils import make_context, smarty_filter, urlencode_filter
 from werkzeug.debug import DebuggedApplication
 
 from helpers import slugify, rep_sen, format_district, format_zip, \
-    is_really_iterable, get_legislators, get_legislator_slugs, \
+    is_really_iterable, get_legislator_slugs, \
     get_legislator_by_slug, get_legislator_income_by_slug, \
     get_legislator_positions_by_slug, get_legislator_family_by_slug
 
@@ -33,13 +33,8 @@ app.jinja_env.filters['is_really_iterable'] = is_really_iterable
 
 
 @app.route('/')
-@oauth.oauth_required
 def index():
-    """
-    Example view demonstrating rendering a simple HTML page.
-    """
     context = make_context()
-    context['legislators'] = get_legislators()
     return make_response(render_template('index.html', **context))
 
 
