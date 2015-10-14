@@ -334,3 +334,12 @@ def is_really_iterable(var):
         return True
     else:
         return False
+
+def leg_bills_count(leg_id):
+    counter = 0
+    context = make_context()
+    for bill in context['COPY']['bills']:
+        if bill['sh_number'] == leg_id:
+            counter = counter + 1
+
+    return counter

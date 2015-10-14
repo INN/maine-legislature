@@ -28,6 +28,7 @@ app.jinja_env.filters['rep_sen'] = rep_sen
 app.jinja_env.filters['format_district'] = format_district
 app.jinja_env.filters['format_zip'] = format_zip
 app.jinja_env.filters['is_really_iterable'] = is_really_iterable
+app.jinja_env.filters['leg_bills_count'] = leg_bills_count
 
 
 @app.route('/')
