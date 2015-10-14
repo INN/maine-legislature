@@ -37,17 +37,17 @@ ASSETS_SLUG = 'maine-legislature'
 """
 DEPLOYMENT
 """
-PRODUCTION_S3_BUCKET = 'apps.investigativenewsnetwork.org'
-STAGING_S3_BUCKET = 'stage-apps.investigativenewsnetwork.org'
-ASSETS_S3_BUCKET = 'assets.apps.investigativenewsnetwork.org'
+PRODUCTION_S3_BUCKET = 'apps.inn.org'
+STAGING_S3_BUCKET = 'stage-apps.inn.org'
+ASSETS_S3_BUCKET = 'assets.apps.inn.org'
 
 DEFAULT_MAX_AGE = 20
 
 RELOAD_TRIGGER = False
 RELOAD_CHECK_INTERVAL = 60
 
-PRODUCTION_SERVERS = []
-STAGING_SERVERS = []
+PRODUCTION_SERVERS = ['']
+STAGING_SERVERS = ['']
 
 # Should code be deployed to the web/cron servers?
 DEPLOY_TO_SERVERS = False
