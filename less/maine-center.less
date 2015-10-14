@@ -2,6 +2,30 @@
 @med-gray: #ccc;
 
 /* Homepage */
+
+/* Title, intro, byline */
+header {
+  text-align: center;
+
+  .story-description {
+    max-width: 720px;
+    text-align: left;
+    margin: 20px auto;
+  }
+
+  .story-meta {
+    ul {
+      margin: 0;
+    }
+    li {
+      list-style-type: none;
+      display: inline;
+    }
+  }
+
+}
+
+/* Select senatr or house */
 .house-selector {
   text-align: center;
   width: 100%;
@@ -27,6 +51,10 @@
 /* "Tabbed" house selection */
 .tab {
   display: none;
+
+  &.active {
+    display: block;
+  }
 }
 
 .legislator {

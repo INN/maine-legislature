@@ -8,12 +8,12 @@
 
     <div class="house-selector">
       <ul>
-        <li><a href="#senators-div">Senate</a></li>
+        <li><a href="#senators-div" class="active">Senate</a></li>
         <li><a href="#house_reps-div">House</a></li>
       </ul>
     </div>
     {% for house in ['senators', 'house_reps'] %}
-      <div id="{{ house }}-div" class="tab">
+      <div id="{{ house }}-div" class="tab{% if house == 'senators' %} active{% endif %}">
         {% for legislator in COPY[house] %}
           {% if loop.index == 1 %}<div class="row">{% endif %}
               <div class="col-md-3 col col-xs-12 legislator {{ legislator.id|rep_sen|slugify }}">
@@ -32,25 +32,6 @@
         {% endfor %}
       </div>
     {% endfor %}
-{% endblock %}
-
-{% block leftovers %}
-<h2 class="knockout-example">Example COPY list</h2>
-<dl>
-    {% for row in COPY.example_list %}
-    <dt>{{ row.term }}</dt><dd>{{ row.definition }}</dd>
-    {% endfor %}
-</dl>
-{% endblock %}
-
-
-{% block wide_content %}
-<div class="row">
-    <div class="col-md-12">
-        <h2 class="knockout-example">{{ COPY.content.about_title }}</h2>
-        {{ COPY.content.about_text }}
-    </div>
-</div>
 {% endblock %}
 
 {% block extra_foot_js %}

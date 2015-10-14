@@ -17,9 +17,9 @@
 
       $(tab)
         .siblings('.tab')
-        .hide();
+        .removeClass('active');
 
-      $(tab).show();
+      $(tab).addClass('active');
 
       return false;
     });
