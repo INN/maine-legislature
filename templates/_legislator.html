@@ -1,19 +1,31 @@
 <div class="legislator {{ legislator['id'] }}">
-    <div class="leg-image-container">
-    </div>
     <div class="leg-details {{ legislator['id'] }}">
-        <h1>{{ legislator['id']|rep_sen }} {{ legislator['name'] }}</h1>
-        <div class="personal-details">
-            <img data-src="img/{{ legislator.id }}.jpg"/>
-            <p class="party">{{ legislator['party'] }}</p>
-            <p class="home-city">{{ legislator['home_city'] }}</p>
-            <p class="representing-district">{{ legislator['district_number']|format_district }}</p>
+        <div class="leg-image-container">
+            <img src="/assets/{{ legislator.id }}.jpg"/>
         </div>
-        {% include '_legislator_committees.html' %}
-        {% include '_legislator_income.html' %}
-        {% include '_legislator_positions.html' %}
-        {% include '_legislator_family.html' %}
-        {% include '_legislator_bills.html' %}
+        <div class="personal-details">
+            <h1>{{ legislator['id']|rep_sen }} {{ legislator['name'] }}</h1>
+            <p>
+                <span class="party">{{ legislator['party'] }}</span>
+                from
+                <span class="home-city">{{ legislator['home_city'] }}</span>,
+                serving
+                <span class="representing-district">{{ legislator['district_number']|format_district }}</span>
+            </p>
+            <p>
+                Sponsored {% include '_legislator_bill_count.html' %} pieces of legislation
+            </p>
+            {% include '_legislator_committees.html' %}
+        </div>
+        <div class="col-left">
+            <h3>Sources of income</h3>
+            {% include '_legislator_income.html' %}
+            {% include '_legislator_positions.html' %}
+            {% include '_legislator_family.html' %}
+        </div>
+        <div class="col-right">
+            {% include '_legislator_bills.html' %}
+        </div>
     </div>
 
 </div>

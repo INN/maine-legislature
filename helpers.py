@@ -208,12 +208,16 @@ def get_legislator_family_by_slug(slug):
 
             # this checks row['Relationship_to_Legislator'] to make sure it's a family
             # otherwise, this goes in family member positions
-            if str(row['Relationship_to_Legislator']).lower() == 'spouse': # The values used here are spouse and self
+            if str(row['Relationship_to_Legislator']).lower() == 'spouse': # The values used here are spouse and self, and '' for self.
                 line = row['Name_of_Position_Holder']
-                line += " (%s), " % str(row['Relationship_to_Legislator']).lower()
-                line += ', ' + row['Title_in_Organization']
-                line += ', ' + row['Organization']
-                line += ', ' + row['City_of_Organization']
+                line += " (%s)" % str(row['Relationship_to_Legislator']).lower()
+                if row['Title_in_Organization']:
+                    line += ', ' + row['Title_in_Organization']
+                if row['Organization']:
+                    line += ', ' + row['Organization']
+                if row['City_of_Organization']:
+                    line += ', ' + row['City_of_Organization']
+                # Not doing zips this app
                 #line += ', ' + format_zip(row['Zip_of_Organization'])
                 if str(row['Compensated']).lower() == 'yes':
                     line += ' (paid position)'
@@ -328,3 +332,12 @@ def is_really_iterable(var):
         return True
     else:
         return False
+
+def leg_bills_count(leg_id):
+    counter = 0
+    context = make_context()
+    for bill in context['COPY']['bills']:
+        if bill['sh_number'] == leg_id:
+            counter = counter + 1
+
+    return counter
