@@ -130,7 +130,8 @@ def render_all():
             g.compile_includes = True
             g.compiled_includes = compiled_includes
 
-            view = _view_from_name(name)
+            view = app.app.view_functions[name]
+            content = view()
 
             content = view().data
 
