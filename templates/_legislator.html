@@ -1,7 +1,7 @@
 <div class="legislator {{ legislator['id'] }}">
     <div class="leg-details {{ legislator['id'] }}">
         <div class="leg-image-container">
-            <img src="/assets/{{ legislator.id }}.jpg"/>
+            <img src="{{ S3_BASE_URL + '/assets/' + legislator.id + '.jpg' }}"/>
         </div>
         <div class="personal-details">
             <h1>{{ legislator['id']|rep_sen }} {{ legislator['name'] }}</h1>
