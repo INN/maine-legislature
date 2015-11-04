@@ -78,7 +78,10 @@ header {
     font-size: 1em;
   }
   @media screen and (max-width: 768px){
-    text-align: center;
+    .personal-details h1,
+    .personal-details h1 + p {
+      text-align: center;
+    }
   }
 }
 
@@ -125,9 +128,14 @@ nav ul.social-links .facebook a {
 
 // Bills
 .bills {
+  padding: 0;
 	li {
-		margin-bottom: 1em;
+    list-style: none;
+    padding: 00.5em 20px;
 	}
+  li:nth-child(odd) {
+    background-color: #f7f7f7;
+  }
 }
 .bill-title {
 	display: block;
@@ -159,7 +167,6 @@ nav ul.social-links .facebook a {
 		max-height: 500px;
 		overflow-y: scroll;
 		border: 1px @gray-medium solid;
-		padding: 0 40px;
 	}
 	.leg-image-container {
 		float: left;
