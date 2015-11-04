@@ -16,7 +16,7 @@
       <div id="{{ house }}-div" class="tab{% if house == 'senators' %} active{% endif %}">
         {% for legislator in COPY[house] %}
           {% if loop.index == 1 %}<div class="row">{% endif %}
-              <div class="col-md-3 col-sm-6 col-xs-12 legislator {{ legislator.id|rep_sen|slugify }}">
+              <div class="col-md-2 col-sm-4 col-xs-12 legislator {{ legislator.id|rep_sen|slugify }}">
                       <a href="legislator/{{ legislator.name|slugify }}">
                         <div class="legislator-img">
                           <img class="lazy" data-original="{{ S3_BASE_URL + '/assets/' + legislator.id + '.jpg' }}"/>
@@ -29,7 +29,7 @@
                       <span class="party">{{ legislator.party }}</span>
                       <span class="town">{{ legislator.home_city }}</span>
               </div>
-           {% if loop.index is divisibleby 4 %}</div><div class="row">{% endif %}
+           {% if loop.index is divisibleby 6 %}</div><div class="row">{% endif %}
            {% if loop.last %}</div>{% endif %}
         {% endfor %}
       </div>
