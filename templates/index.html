@@ -5,33 +5,46 @@
 {% endblock %}
 
 {% block content %}
-
-    <div class="house-selector">
-      <ul>
-        <li><a href="#senators-div" class="active">Senate</a></li>
-        <li><a href="#house_reps-div">House</a></li>
-      </ul>
-    </div>
-    {% for house in ['senators', 'house_reps'] %}
-      <div id="{{ house }}-div" class="tab{% if house == 'senators' %} active{% endif %}">
-        {% for legislator in COPY[house] %}
-          {% if loop.index == 1 %}<div class="row">{% endif %}
-              <div class="col-md-2 col-sm-4 col-xs-12 legislator {{ legislator.id|rep_sen|slugify }}">
-                      <a href="legislator/{{ legislator.name|slugify }}">
-                        <div class="legislator-img">
-                          <img class="lazy" data-original="{{ S3_BASE_URL + '/assets/' + legislator.id + '.jpg' }}"/>
-                        </div>
-                      </a>
-                      <a href="legislator/{{ legislator.name|slugify }}">
-                        <span class="name">{{ legislator.id|rep_sen }} {{ legislator.name }}</span>
-                      </a>
-                      <span class="district">{{ legislator.district_number|format_district }}</span>
-                      <span class="party">{{ legislator.party }}</span>
-                      <span class="town">{{ legislator.home_city }}</span>
-              </div>
-           {% if loop.index is divisibleby 6 %}</div><div class="row">{% endif %}
-           {% if loop.last %}</div>{% endif %}
-        {% endfor %}
+    <div class="search">
+      <div class="section-hed">
+        <h3>Search for legislators</h3>
       </div>
-    {% endfor %}
+      <input type="text" class="typeahead" placeholder="Search by name, district, party or hometown" />
+      <p><a href="#" class="reset-search">Reset search</a></p>
+    </div>
+    <div id="legislators-bucket">
+      <div class="section-hed">
+        <h5>or</h5>
+        <h3>Select a house</h3>
+      </div>
+      <div class="house-selector">
+        <ul>
+          <li><a href="#senators-div" class="active">Senate</a></li>
+          <li><a href="#house_reps-div">House</a></li>
+        </ul>
+      </div>
+      {% for house in ['senators', 'house_reps'] %}
+        <div id="{{ house }}-div" class="tab{% if house == 'senators' %} active{% endif %}">
+          {% for legislator in COPY[house] %}
+            {% if loop.index == 1 %}<div class="row">{% endif %}
+                <div class="col-md-2 col-sm-4 col-xs-12 legislator {{ legislator.id|rep_sen|slugify }}" data-leg-id="{{ legislator.id }}">
+                    <a href="legislator/{{ legislator.name|slugify }}">
+                      <div class="legislator-img">
+                        <img class="lazy" data-original="{{ S3_BASE_URL + '/assets/' + legislator.id + '.jpg' }}"/>
+                      </div>
+                    </a>
+                    <a href="legislator/{{ legislator.name|slugify }}">
+                      <span class="name">{{ legislator.id|rep_sen }} {{ legislator.name }}</span>
+                    </a>
+                    <span class="district">{{ legislator.district_number|format_district }}</span>
+                    <span class="party">{{ legislator.party }}</span>
+                    <span class="town">{{ legislator.home_city }}</span>
+                </div>
+             {% if loop.index is divisibleby 6 %}</div><div class="row">{% endif %}
+             {% if loop.last %}</div>{% endif %}
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+
 {% endblock %}

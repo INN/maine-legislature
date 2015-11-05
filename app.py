@@ -10,6 +10,7 @@ App Template for static publishing.
 import app_config
 import oauth
 import static
+import json
 
 from flask import Flask, make_response, render_template
 from render_utils import make_context, smarty_filter, urlencode_filter
@@ -18,7 +19,8 @@ from werkzeug.debug import DebuggedApplication
 from helpers import slugify, rep_sen, format_district, format_zip, \
     is_really_iterable, get_legislator_slugs, leg_bills_count, \
     get_legislator_by_slug, get_legislator_income_by_slug, \
-    get_legislator_positions_by_slug, get_legislator_family_by_slug
+    get_legislator_positions_by_slug, get_legislator_family_by_slug, \
+    get_legislators
 
 app = Flask(__name__)
 app.debug = app_config.DEBUG
@@ -55,22 +57,24 @@ for slug in legislator_slugs:
         return make_response(render_template('legislator.html', **context))
 
 
-#legislator_slugs_embed = get_legislator_slugs()
-#for slug in legislator_slugs_embed:
-#    @app.route('/embed/legislator/%s/' % slug, endpoint=slug)
-#    def legislator_embed():
-#        hcontext = make_context()
-#
-#        slug = request.path.split('/')[2]
-#
-#        hcontext['legislator'] = get_legislator_by_slug(slug)
-#        hcontext['income'] = get_legislator_income_by_slug(slug)
-#        hcontext['positions'] = get_legislator_positions_by_slug(slug)
-#        hcontext['family'] = get_legislator_family_by_slug(slug)
-#        with open('data/featured.json') as f:
-#            hcontext['featured'] = json.load(f)
-#
-#        return make_response(render_template('embed_legislator.html', **hcontext))
+@app.route('/legislators.json', endpoint='legislators_json')
+def legislators_json():
+    legislators = get_legislators()
+
+    json_data = []
+    for legislator in legislators:
+        json_data.append({
+            'id': legislator['id'],
+            'name': legislator['name'],
+            'district': format_district(legislator['district_number']),
+            'party': legislator['party'],
+            'town': legislator['home_city'],
+            'slug': slugify(legislator['name']),
+            'rep_sen': rep_sen(legislator['id'])
+        })
+
+    return make_response(json.dumps(json_data))
+
 
 app.register_blueprint(static.static)
 app.register_blueprint(oauth.oauth)

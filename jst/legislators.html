@@ -1,0 +1,22 @@
+<% _.each(legislators, function(legislator, idx) { %>
+  <% if ( idx == 0 ) { %><div class="row"><% } %>
+  <div class="col-md-2 col-sm-4 col-xs-12 legislator" data-leg-id="<%= legislator.id %>">
+      <a href="legislator/<%= legislator.slug %>">
+        <div class="legislator-img">
+          <img class="lazy" data-original="<%= APP_CONFIG.S3_BASE_URL + '/assets/' + legislator.id + '.jpg' %>"/>
+        </div>
+      </a>
+      <a href="legislator/<%= legislator.slug %>">
+        <span class="name"><%= legislator.rep_sen %> <%= legislator.name %></span>
+      </a>
+      <span class="district"><%= legislator.district %></span>
+      <span class="party"><%= legislator.party %></span>
+      <span class="town"><%= legislator.town %></span>
+  </div>
+ <% if ( idx > 0 && ((idx + 1) % 6) == 0) { %></div><div class="row"><% } %>
+ <% if ( idx == (legislators.length - 1) ) { %></div><% } %>
+<% }) %>
+
+<% if ( ! legislators.length ) { %>
+  <h2 class="search-error">No results found!</h2>
+<% } %>
