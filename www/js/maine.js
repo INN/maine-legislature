@@ -68,7 +68,7 @@
 
     var fetchTypeaheadData = function() {
       $.ajax({
-        url: APP_CONFIG.S3_BASE_URL + '/legislators.json',
+        url: APP_CONFIG.S3_BASE_URL + '/assets/data/legislators.json',
         dataType: 'json',
         method: 'get',
         success: setupTypehead

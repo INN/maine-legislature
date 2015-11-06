@@ -10,7 +10,6 @@ App Template for static publishing.
 import app_config
 import oauth
 import static
-import json
 
 from flask import Flask, make_response, render_template
 from render_utils import make_context, smarty_filter, urlencode_filter
@@ -19,8 +18,7 @@ from werkzeug.debug import DebuggedApplication
 from helpers import slugify, rep_sen, format_district, format_zip, \
     is_really_iterable, get_legislator_slugs, leg_bills_count, \
     get_legislator_by_slug, get_legislator_income_by_slug, \
-    get_legislator_positions_by_slug, get_legislator_family_by_slug, \
-    get_legislators
+    get_legislator_positions_by_slug, get_legislator_family_by_slug
 
 app = Flask(__name__)
 app.debug = app_config.DEBUG
@@ -55,25 +53,6 @@ for slug in legislator_slugs:
         context['positions'] = get_legislator_positions_by_slug(slug)
         context['family'] = get_legislator_family_by_slug(slug)
         return make_response(render_template('legislator.html', **context))
-
-
-@app.route('/legislators.json', endpoint='legislators_json')
-def legislators_json():
-    legislators = get_legislators()
-
-    json_data = []
-    for legislator in legislators:
-        json_data.append({
-            'id': legislator['id'],
-            'name': legislator['name'],
-            'district': format_district(legislator['district_number']),
-            'party': legislator['party'],
-            'town': legislator['home_city'],
-            'slug': slugify(legislator['name']),
-            'rep_sen': rep_sen(legislator['id'])
-        })
-
-    return make_response(json.dumps(json_data))
 
 
 app.register_blueprint(static.static)

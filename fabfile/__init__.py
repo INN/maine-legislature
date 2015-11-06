@@ -30,6 +30,8 @@ if app_config.DEPLOY_CRONTAB:
 if app_config.PROJECT_SLUG == '$NEW_PROJECT_SLUG':
     import bootstrap
 
+from helpers import legislators_json
+
 """
 Base configuration
 """
@@ -263,3 +265,11 @@ def shiva_the_destroyer():
 
             if app_config.DEPLOY_SERVICES:
                 servers.nuke_confs()
+
+
+@task
+def render_json():
+    """
+    Render www/assets/data/legislators.json
+    """
+    legislators_json()

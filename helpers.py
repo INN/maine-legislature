@@ -2,6 +2,7 @@
 import app_config
 import copytext
 import re
+import json
 
 from unicodedata import normalize
 
@@ -359,3 +360,23 @@ def get_copy():
     if not CACHE.get('copy', None):
         CACHE['copy'] = copytext.Copy(app_config.COPY_PATH)
     return CACHE['copy']
+
+
+def legislators_json():
+    legislators = get_legislators()
+
+    json_data = []
+    for legislator in legislators:
+        json_data.append({
+            'id': legislator['id'],
+            'name': legislator['name'],
+            'district': format_district(legislator['district_number']),
+            'party': legislator['party'],
+            'town': legislator['home_city'],
+            'slug': slugify(legislator['name']),
+            'rep_sen': rep_sen(legislator['id'])
+        })
+
+    with open('www/assets/data/legislators.json', 'w+') as f:
+        print "Writing www/assets/data/legislators.json"
+        f.write(json.dumps(json_data))
