@@ -37,9 +37,9 @@ ASSETS_SLUG = 'maine-legislature'
 """
 DEPLOYMENT
 """
-PRODUCTION_S3_BUCKET = 'apps.inn.org'
-STAGING_S3_BUCKET = 'stage-apps.inn.org'
-ASSETS_S3_BUCKET = 'assets.apps.inn.org'
+PRODUCTION_S3_BUCKET = 'apps.pinetreewatchdog.org'
+STAGING_S3_BUCKET = 'stage-apps.pinetreewatchdog.org'
+ASSETS_S3_BUCKET = 'assets.apps.pinetreewatchdog.org'
 
 DEFAULT_MAX_AGE = 20
 
