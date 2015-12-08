@@ -79,7 +79,7 @@ def get_legislator_income_by_slug(slug):
                     # + format_zip(row['Zip_of_Lender']) + ' (Loan)'
                 )
 
-    for row in copy['income_employmnet']:
+    for row in copy['income_employment']:
         if row['sh_number'] == leg_id:
             try:
                 income['income_employment']
