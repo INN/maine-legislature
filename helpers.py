@@ -75,8 +75,8 @@ def get_legislator_income_by_slug(slug):
             if row['Name_of_Lender'] != '' and row['City_of_Lender'] != '' and row['Zip_of_Lender'] != '':
                 income['loans'].append(
                     row['Name_of_Lender'] + ', '
-                    + row['City_of_Lender'] + ', '
-                    # + format_zip(row['Zip_of_Lender']) + ' (Loan)'
+                    + row['City_of_Lender'] + ' (loan)'
+                    # + ', ' + format_zip(row['Zip_of_Lender']) + ' (Loan)'
                 )
 
     for row in copy['income_employmnet']:
@@ -90,7 +90,7 @@ def get_legislator_income_by_slug(slug):
                 income['income_employment'].append(
                     row['Position'] + ', '
                     + row['Name_Employer'] + ', '
-                    + row['Employer_City'] + ', '
+                    + row['Employer_City']
                     # + format_zip(row['Employer_Zip'])
                 )
 
@@ -104,7 +104,7 @@ def get_legislator_income_by_slug(slug):
             if row['Name_of_Self_Employment_Business'] != '':
                 income['income_self'].append(
                     row['Name_of_Self_Employment_Business'] + ', '
-                    + row['City_of_Self_Employment_Business'] + ', '
+                    + row['City_of_Self_Employment_Business']
                     # + format_zip(row['Zip_of_Self_Employment'])
                 )
 
@@ -118,7 +118,7 @@ def get_legislator_income_by_slug(slug):
             if row['Name_of_Business'] != '':
                 income['income_business'].append(
                     row['Name_of_Business'] + ', '
-                    + row['City_of_Business'] + ', '
+                    + row['City_of_Business']
                     # + format_zip(row['Zip_of_Business'])
                 )
 
@@ -133,7 +133,7 @@ def get_legislator_income_by_slug(slug):
                 income['income_law'].append(
                     row['Position_in_Practice'] + ', '
                     + row['Name_of_Practice'] + ', '
-                    + row['City_of_Practice'] + ', '
+                    + row['City_of_Practice']
                     # + format_zip(row['Zip_of_Practice'])
                 )
 
@@ -189,7 +189,7 @@ def get_legislator_positions_by_slug(slug):
             if str(row['Relationship_to_Legislator']).lower() == 'self':
                 line = row['Title_in_Organization'] + ', '
                 line += row['Organization'] + ', '
-                line += row['City_of_Organization'] + ', '
+                line += row['City_of_Organization']
                 # line += format_zip(row['Zip_of_Organization'])
                 if str(row['Compensated']).lower() == 'yes':
                     line += ' (paid position)'
