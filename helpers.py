@@ -53,7 +53,7 @@ def get_legislator_income_by_slug(slug):
                 income['gifts'] = []
 
             if row['Source_of_Gift'] != '':
-                income['gifts'].append(row['Source_of_Gift'] + ' (Gifts)')
+                income['gifts'].append(row['Source_of_Gift'] + ' (gifts)')
 
     for row in copy['honoraria']:
         if row['sh_number'] == leg_id:
