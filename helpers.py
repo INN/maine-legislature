@@ -188,8 +188,9 @@ def get_legislator_positions_by_slug(slug):
             # otherwise, this goes in family member positions
             if str(row['Relationship_to_Legislator']).lower() == 'self':
                 line = row['Title_in_Organization'] + ', '
-                line += row['Organization'] + ', '
-                line += row['City_of_Organization']
+                line += row['Organization']
+                if str(row['City_of_Organization']) != '':
+                    line += ', ' + row['City_of_Organization']
                 # line += format_zip(row['Zip_of_Organization'])
                 if str(row['Compensated']).lower() == 'yes':
                     line += ' (paid position)'
