@@ -2,8 +2,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="sr-only">{{ COPY.content.project_name|smarty }}</h1>
-                <img id="homepage_header_image" src="assets/homepage_header.jpg" title="Making Connections: A Guide to Legislators' Private and Public interests" alt="An image of the Maine Statehouse in winter, with the following title text overlaid: Making Connections: A Guide to Legislators' private and public interests." />
+                <h1 class="visible-xs ">{{ COPY.content.project_name|smarty }}</h1>
+                <h2 class="visible-xs subtitle">{{ COPY.content.project_subtitle|smarty }}</h2>
+                <img id="homepage_header_image" class="lazy hidden-xs " data-original="assets/homepage_header.jpg" title="Making Connections: A Guide to Legislators' Private and Public interests" alt="An image of the Maine Statehouse in winter, with the following title text overlaid: Making Connections: A Guide to Legislators' private and public interests." />
                 <div class="story-meta">
                     <ul>
                       <li class="byline"><span>{{ COPY.content.byline }}</span> | </li>
