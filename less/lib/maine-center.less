@@ -225,10 +225,13 @@ nav ul.social-links .facebook a {
   input {
     min-width: 310px;
     max-width: 100%;
-    width: 500px;
+    width: 100%;
     height: 32px;
     font-size: 18px;
     padding: 8px;
+    @media (min-width: 560px) {
+      width: 500px;
+    }
   }
 }
 
