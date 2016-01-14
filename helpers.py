@@ -1,5 +1,6 @@
 # Helper functions for the Maine Legislature project
 import app_config
+import collections
 import copytext
 import re
 import json
@@ -42,32 +43,8 @@ def get_legislator_id_by_slug(slug):
 # I apologize for the length of this function.
 def get_legislator_income_by_slug(slug):
     copy = get_copy()
-    income = {}
+    income = collections.OrderedDict()
     leg_id = get_legislator_id_by_slug(slug)
-
-    for row in copy['honoraria']:
-        if row['sh_number'] == leg_id:
-            try:
-                income['honoraria']
-            except KeyError:
-                income['honoraria'] = []
-
-            if row['Source_of_Honoraria'] != '':
-                income['honoraria'].append(row['Source_of_Honoraria'] + ' (honorarium)')
-
-    for row in copy['loans']:
-        if row['sh_number'] == leg_id:
-            try:
-                income['loans']
-            except KeyError:
-                income['loans'] = []
-
-            if row['Name_of_Lender'] != '' and row['City_of_Lender'] != '' and row['Zip_of_Lender'] != '':
-                income['loans'].append(
-                    row['Name_of_Lender'] + ', '
-                    + row['City_of_Lender'] + ' (loan)'
-                    # + ', ' + format_zip(row['Zip_of_Lender']) + ' (Loan)'
-                )
 
     for row in copy['income_employment']:
         if row['sh_number'] == leg_id:
@@ -143,15 +120,39 @@ def get_legislator_income_by_slug(slug):
 
                 income['income_other'].append(line)
 
+    for row in copy['honoraria']:
+        if row['sh_number'] == leg_id:
+            try:
+                income['honoraria']
+            except KeyError:
+                income['honoraria'] = []
+
+            if row['Source_of_Honoraria'] != '':
+                income['honoraria'].append(row['Source_of_Honoraria'] + ' (honorarium)')
+
+    for row in copy['loans']:
+        if row['sh_number'] == leg_id:
+            try:
+                income['loans']
+            except KeyError:
+                income['loans'] = []
+
+            if row['Name_of_Lender'] != '' and row['City_of_Lender'] != '' and row['Zip_of_Lender'] != '':
+                income['loans'].append(
+                    row['Name_of_Lender'] + ', '
+                    + row['City_of_Lender'] + ' (loan)'
+                    # + ', ' + format_zip(row['Zip_of_Lender']) + ' (Loan)'
+                )
+
     for row in copy['gifts']:
         if row['sh_number'] == leg_id:
             try:
-                income['gifts']
+                income['zgifts']
             except KeyError:
-                income['gifts'] = []
+                income['zgifts'] = []
 
             if row['Source_of_Gift'] != '':
-                income['gifts'].append(row['Source_of_Gift'] + ' (gifts)')
+                income['zgifts'].append(row['Source_of_Gift'] + ' (gifts)')
 
     return income
 
