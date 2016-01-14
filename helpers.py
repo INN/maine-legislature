@@ -45,16 +45,6 @@ def get_legislator_income_by_slug(slug):
     income = {}
     leg_id = get_legislator_id_by_slug(slug)
 
-    for row in copy['gifts']:
-        if row['sh_number'] == leg_id:
-            try:
-                income['gifts']
-            except KeyError:
-                income['gifts'] = []
-
-            if row['Source_of_Gift'] != '':
-                income['gifts'].append(row['Source_of_Gift'] + ' (gifts)')
-
     for row in copy['honoraria']:
         if row['sh_number'] == leg_id:
             try:
@@ -152,6 +142,16 @@ def get_legislator_income_by_slug(slug):
                     line += " (%s)" % row['Description_of_income_type']
 
                 income['income_other'].append(line)
+
+    for row in copy['gifts']:
+        if row['sh_number'] == leg_id:
+            try:
+                income['gifts']
+            except KeyError:
+                income['gifts'] = []
+
+            if row['Source_of_Gift'] != '':
+                income['gifts'].append(row['Source_of_Gift'] + ' (gifts)')
 
     return income
 
