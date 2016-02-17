@@ -28,7 +28,7 @@ PROJECT_FILENAME = 'maine_legislature'
 REPOSITORY_NAME = 'maine-legislature'
 GITHUB_USERNAME = 'INN'
 REPOSITORY_URL = 'git@github.com:%s/%s.git' % (GITHUB_USERNAME, REPOSITORY_NAME)
-REPOSITORY_ALT_URL = None # 'git@bitbucket.org:nprapps/%s.git' % REPOSITORY_NAME'
+REPOSITORY_ALT_URL = None # 'git@bitbucket.org:projectlargo/%s.git' % REPOSITORY_NAME'
 
 # Project name used for assets rig
 # Should stay the same, even if PROJECT_SLUG changes
@@ -101,7 +101,7 @@ SHARE_URL = 'http://%s/%s/' % (PRODUCTION_S3_BUCKET, PROJECT_SLUG)
 SERVICES
 """
 GOOGLE_ANALYTICS = {
-    'ACCOUNT_ID': 'UA-17578670-10', # apps.investigativenewsnetwork.org
+    'ACCOUNT_ID': 'UA-16844722-1', #Maine
     'DOMAIN': PRODUCTION_S3_BUCKET,
     'TOPICS': '' # e.g. '[1014,3,1003,1002,1001]'
 }
