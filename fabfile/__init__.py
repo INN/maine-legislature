@@ -166,6 +166,7 @@ def deploy(remote='origin', reload=False):
             servers.deploy_confs()
 
     update()
+    render_json()
     render.render_all()
 
     # Clear files that should never be deployed
