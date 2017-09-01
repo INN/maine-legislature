@@ -41,7 +41,7 @@ def index():
 
 legislator_slugs = get_legislator_slugs()
 for slug in legislator_slugs:
-    @app.route('/legislator/%s/' % slug, endpoint=slug)
+    @app.route('/legislator/%s/' % slug)
     def legislator():
         context = make_context()
         from flask import request
