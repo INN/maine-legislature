@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-
+# _*_ coding:utf-8 _*_
 import codecs
 from datetime import datetime
 import json
+import logging
 import time
 import urllib
 import subprocess
@@ -10,10 +11,13 @@ import subprocess
 from flask import Markup, g, render_template, request
 from slimit import minify
 from smartypants import smartypants
-from urlparse import urlparse
 
 import app_config
 import copytext
+
+logging.basicConfig(format=app_config.LOG_FORMAT)
+logger = logging.getLogger(__name__)
+logger.setLevel(app_config.LOG_LEVEL)
 
 class BetterJSONEncoder(json.JSONEncoder):
     """
@@ -48,6 +52,9 @@ class Includer(object):
 
     def _relativize_path(self, path):
         relative_path = path
+        if relative_path.startswith('www/'):
+            relative_path = relative_path[4:]
+
         depth = len(request.path.split('/')) - (2 + self.asset_depth)
 
         while depth > 0:
@@ -67,7 +74,7 @@ class Includer(object):
                 out_path = 'www/%s' % path
 
                 if path not in g.compiled_includes:
-                    print 'Rendering %s' % out_path
+                    logger.info('Rendering %s' % out_path)
 
                     with codecs.open(out_path, 'w', encoding='utf-8') as f:
                         f.write(self._compress())
@@ -106,8 +113,12 @@ class JavascriptIncluder(Includer):
             src_paths.append('www/%s' % src)
 
             with codecs.open('www/%s' % src, encoding='utf-8') as f:
-                print '- compressing %s' % src
-                output.append(minify(f.read()))
+                if not src.endswith('.min.js'):
+                    logger.info('- compressing %s' % src)
+                    output.append(minify(f.read()))
+                else:
+                    logger.info('- appending already compressed %s' % src)
+                    output.append(f.read())
 
         context = make_context()
         context['paths'] = src_paths
@@ -139,7 +150,7 @@ class CSSIncluder(Includer):
                 compressed_src = subprocess.check_output(["node_modules/less/bin/lessc", "-x", src])
                 output.append(compressed_src)
             except:
-                print 'It looks like "lessc" isn\'t installed. Try running: "npm install"'
+                logger.error('It looks like "lessc" isn\'t installed. Try running: "npm install"')
                 raise
 
         context = make_context()
@@ -220,24 +231,5 @@ def smarty_filter(s):
     try:
         return Markup(s)
     except:
-        print 'This string failed to encode: %s' % s
+        logger.error('This string failed to encode: %s' % s)
         return Markup(s)
-
-def app_template_url_for(endpoint, **values):
-    target = app_config.DEPLOYMENT_TARGET
-    targets = ['staging', 'production', ]
-    project_slug = app_config.PROJECT_SLUG
-
-    if target not in targets:
-        return url_for(endpoint, **values)
-    else:
-        if values.get('_external', None):
-            parts = urlparse(url_for(endpoint, **values))
-            url = '%s://%s/%s%s' % (parts.scheme, parts.netloc, project_slug, parts.path)
-            if parts.query:
-                url += '?%s' % parts.query
-            if parts.fragment:
-                url += '#%s' % parts.fragment
-            return url
-        else:
-            return "/" + project_slug + url_for(endpoint, **values)

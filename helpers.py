@@ -1,3 +1,4 @@
+# _*_ coding:utf-8 _*_
 # Helper functions for the Maine Legislature project
 import app_config
 import collections
@@ -53,7 +54,7 @@ def get_legislator_income_by_slug(slug):
             except KeyError:
                 income['income_employment'] = []
 
-            if row['Name_Employer'] != '':
+            if row['Name_Employer'] != u'':
                 income['income_employment'].append(
                     row['Position'] + ', '
                     + row['Name_Employer'] + ', '
@@ -68,7 +69,7 @@ def get_legislator_income_by_slug(slug):
             except KeyError:
                 income['income_self'] = []
 
-            if row['Name_of_Self_Employment_Business'] != '':
+            if row['Name_of_Self_Employment_Business'] != u'':
                 income['income_self'].append(
                     row['Name_of_Self_Employment_Business'] + ', '
                     + row['City_of_Self_Employment_Business']
@@ -82,7 +83,7 @@ def get_legislator_income_by_slug(slug):
             except KeyError:
                 income['income_business'] = []
 
-            if row['Name_of_Business'] != '':
+            if row['Name_of_Business'] != u'':
                 income['income_business'].append(
                     row['Name_of_Business'] + ', '
                     + row['City_of_Business']
@@ -96,7 +97,7 @@ def get_legislator_income_by_slug(slug):
             except KeyError:
                 income['income_law'] = []
 
-            if row['Name_of_Practice'] != '':
+            if row['Name_of_Practice'] != u'':
                 income['income_law'].append(
                     row['Position_in_Practice'] + ', '
                     + row['Name_of_Practice'] + ', '
@@ -111,11 +112,11 @@ def get_legislator_income_by_slug(slug):
             except KeyError:
                 income['income_other'] = []
 
-            if row['Name_of_Source'] != '':
+            if row['Name_of_Source'] != u'':
                 line = row['Name_of_Source']
                 line += ', ' + row['City_of_Source']
                 # line += ', ' + format_zip(row['Zip_of_Source'])
-                if row['Description_of_income_type'] != '':
+                if row['Description_of_income_type'] != u'':
                     line += " (%s)" % row['Description_of_income_type']
 
                 income['income_other'].append(line)
@@ -127,7 +128,7 @@ def get_legislator_income_by_slug(slug):
             except KeyError:
                 income['honoraria'] = []
 
-            if row['Source_of_Honoraria'] != '':
+            if row['Source_of_Honoraria'] != u'':
                 income['honoraria'].append(row['Source_of_Honoraria'] + ' (honorarium)')
 
     for row in copy['loans']:
@@ -137,7 +138,7 @@ def get_legislator_income_by_slug(slug):
             except KeyError:
                 income['loans'] = []
 
-            if row['Name_of_Lender'] != '' and row['City_of_Lender'] != '' and row['Zip_of_Lender'] != '':
+            if row['Name_of_Lender'] != u'' and row['City_of_Lender'] != u'' and row['Zip_of_Lender'] != u'':
                 income['loans'].append(
                     row['Name_of_Lender'] + ', '
                     + row['City_of_Lender'] + ' (loan)'
@@ -151,7 +152,7 @@ def get_legislator_income_by_slug(slug):
             except KeyError:
                 income['zgifts'] = []
 
-            if row['Source_of_Gift'] != '':
+            if row['Source_of_Gift'] != u'':
                 income['zgifts'].append(row['Source_of_Gift'] + ' (gifts)')
 
     return income
@@ -169,8 +170,8 @@ def get_legislator_positions_by_slug(slug):
             except KeyError:
                 positions['position_political'] = []
 
-            if row['Name_of_Committee'] != '':
-                if row['Name_of_Official'] == '':
+            if row['Name_of_Committee'] != u'':
+                if row['Name_of_Official'] == u'':
                     # the official is the legislator,
                     # per https://github.com/INN/maine-legislature/issues/68
                     positions['position_political'].append(
@@ -187,13 +188,13 @@ def get_legislator_positions_by_slug(slug):
 
             # this checks row['Relationship_to_Legislator'] to make sure it's self
             # otherwise, this goes in family member positions
-            if str(row['Relationship_to_Legislator']).lower() == 'self':
+            if unicode(row['Relationship_to_Legislator']).lower() == u'self':
                 line = row['Title_in_Organization'] + ', '
                 line += row['Organization']
-                if str(row['City_of_Organization']) != '':
+                if unicode(row['City_of_Organization']) != u'':
                     line += ', ' + row['City_of_Organization']
                 # line += format_zip(row['Zip_of_Organization'])
-                if str(row['Compensated']).lower() == 'yes':
+                if unicode(row['Compensated']).lower() == u'yes':
                     line += ' (paid position)'
                 positions['position_org'].append(line)
 
@@ -214,10 +215,10 @@ def get_legislator_family_by_slug(slug):
 
             # this checks row['Relationship_to_Legislator'] to make sure it's a family
             # otherwise, this goes in family member positions
-            # The values used here are spouse and self, and '' for self.
-            if str(row['Relationship_to_Legislator']).lower() == 'spouse':
+            # The values used here are spouse and self, and u'' for self.
+            if unicode(row['Relationship_to_Legislator']).lower() == u'spouse':
                 line = row['Name_of_Position_Holder']
-                line += " (%s)" % str(row['Relationship_to_Legislator']).lower()
+                line += " (%s)" % unicode(row['Relationship_to_Legislator']).lower()
                 if row['Title_in_Organization']:
                     line += ', ' + row['Title_in_Organization']
                 if row['Organization']:
@@ -226,7 +227,7 @@ def get_legislator_family_by_slug(slug):
                     line += ', ' + row['City_of_Organization']
                 # Not doing zips this app
                 # line += ', ' + format_zip(row['Zip_of_Organization'])
-                if str(row['Compensated']).lower() == 'yes':
+                if unicode(row['Compensated']).lower() == u'yes':
                     line += ' (paid position)'
                 family['position_org'].append(line)
 
@@ -237,15 +238,15 @@ def get_legislator_family_by_slug(slug):
             except KeyError:
                 family['family_income_compensation'] = []
 
-            if str(row['Name_of_family_member']).lower() != '':
+            if unicode(row['Name_of_family_member']).lower() != u'':
                 line = row['Name_of_family_member']
-                if str(row['Position_of_family_member']) != '':
+                if unicode(row['Position_of_family_member']) != u'':
                     line += ', ' + row['Position_of_family_member']
-                if str(row['Family_Member_Employers_Name']) != '':
+                if unicode(row['Family_Member_Employers_Name']) != u'':
                     line += ', ' + row['Family_Member_Employers_Name']
-                if str(row['Employers_City']) != '':
+                if unicode(row['Employers_City']) != u'':
                     line += ', ' + row['Employers_City']
-                # if str(row['Employers_Zip']) != '':
+                # if unicode(row['Employers_Zip']) != u'':
                 #    line += ', ' + format_zip(row['Employers_Zip'])
                 family['family_income_compensation'].append(line)
 
@@ -257,15 +258,15 @@ def get_legislator_family_by_slug(slug):
                 family['family_other_income'] = []
 
             # This column is also used for other family members
-            if str(row['Name_of_spouse']) != '':
+            if unicode(row['Name_of_spouse']) != u'':
                 line = row['Name_of_spouse']
-                if str(row['Source_of_family_member_income']) != '':
+                if unicode(row['Source_of_family_member_income']) != u'':
                     line += ', ' + row['Source_of_family_member_income']
-                if str(row['City_of_other_source']) != '':
+                if unicode(row['City_of_other_source']) != u'':
                     line += ', ' + row['City_of_other_source']
-                # if str(row['Zip_of_other_source']) != '':
+                # if unicode(row['Zip_of_other_source']) != u'':
                 #    line += ', ' +  format_zip(row['Zip_of_other_source'])
-                if str(row['Type_of_Income']) != '':
+                if unicode(row['Type_of_Income']) != u'':
                     line += ' (%s)' % row['Type_of_Income']
                 family['family_other_income'].append(line)
 
@@ -276,8 +277,8 @@ def get_legislator_family_by_slug(slug):
             except KeyError:
                 family['position_political'] = []
 
-            if row['Name_of_Committee'] != '':
-                if row['Name_of_Official'] != '':
+            if row['Name_of_Committee'] != u'':
+                if row['Name_of_Official'] != u'':
                     # the official is the legislator,
                     # per https://github.com/INN/maine-legislature/issues/68
                     family['position_political'].append(
@@ -295,7 +296,7 @@ def rep_sen(id):
     elif id.startswith('h'):
         return u"Rep."
     else:
-        return ''
+        return u''
 
 
 def format_district(district):
@@ -315,7 +316,7 @@ def format_zip(zip):
     try:
         zip = str(zip)
         #stripzero = re.sub(u'.0', u'')
-        zip = zip.replace('.0', '')
+        zip = zip.replace('.0', u'')
         return u"0" + zip
     except ValueError:
         return zip
