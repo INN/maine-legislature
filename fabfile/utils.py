@@ -32,10 +32,14 @@ def get_bucket(bucket_name):
     Established a connection and gets s3 bucket
     """
 
-    if '.' in bucket_name:
-        s3 = boto.connect_s3(calling_format=OrdinaryCallingFormat())
+    if (app_config.DEPLOYMENT_TARGET == 'production'):
+        s3 = boto.s3.connect_to_region('us-east-2')
+
     else:
-        s3 = boto.connect_s3()
+        if '.' in bucket_name:
+            s3 = boto.connect_s3(calling_format=OrdinaryCallingFormat())
+        else:
+            s3 = boto.connect_s3()
 
     return s3.get_bucket(bucket_name)
 
