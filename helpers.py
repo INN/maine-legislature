@@ -84,11 +84,10 @@ def get_legislator_income_by_slug(slug):
                 income['income_business'] = []
 
             if row['Name_of_Business'] != u'':
-                income['income_business'].append(
-                    row['Name_of_Business'] + ', '
-                    + row['City_of_Business']
-                    # + format_zip(row['Zip_of_Business'])
-                )
+                temporary = row['Name_of_Business']
+                if row['City_of_Business']:
+                    temporary += ', ' + row['City_of_Business']
+                income['income_business'].append(temporary)
 
     for row in copy['income_law']:
         if row['sh_number'] == leg_id:
@@ -113,8 +112,11 @@ def get_legislator_income_by_slug(slug):
                 income['income_other'] = []
 
             if row['Name_of_Source'] != u'':
-                line = row['Name_of_Source']
-                line += ', ' + row['City_of_Source']
+                line = u''
+                if row['Name_of_Source'] != u'':
+                    line += row['Name_of_Source']
+                if row['City_of_Source'] != u'':
+                    line += ', ' + row['City_of_Source']
                 # line += ', ' + format_zip(row['Zip_of_Source'])
                 if row['Description_of_income_type'] != u'':
                     line += " (%s)" % row['Description_of_income_type']
