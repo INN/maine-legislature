@@ -169,7 +169,7 @@ def deploy(remote='origin', reload=False):
 
     update()
     render_json()
-    #render.render_all()
+    render.render_all()
 
     # Clear files that should never be deployed
     local('rm -rf www/live-data')

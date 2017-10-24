@@ -32,8 +32,15 @@ def get_bucket(bucket_name):
     Established a connection and gets s3 bucket
     """
 
-    if (app_config.DEPLOYMENT_TARGET == 'production'):
-        s3 = boto.s3.connect_to_region('us-east-2')
+    # us-east-2 drama
+    if (bucket_name == app_config.PRODUCTION_S3_BUCKET):
+        # https://stackoverflow.com/questions/34811146/boto-get-s3-bucket-location
+        # if we don't specify us-east-2 here, then we get a 301.
+        s3 = boto.s3.connect_to_region(
+            'us-east-2',
+            host='s3-us-east-2.amazonaws.com',
+            calling_format=OrdinaryCallingFormat()
+        )
 
     else:
         if '.' in bucket_name:
