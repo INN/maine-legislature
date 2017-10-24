@@ -185,7 +185,6 @@ def configure_targets(deployment_target):
 
         # because Ben, who lives in Ohio, wanted to make deploys faster and put the bucket there
         os.environ['AWS_DEFAULT_REGION'] = 'us-east-2'
-        print(os.environ)
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
         S3_BASE_URL = '//%s/%s' % (S3_BUCKET, PROJECT_SLUG)
