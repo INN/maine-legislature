@@ -171,8 +171,7 @@ def configure_targets(deployment_target):
     global DISQUS_SHORTNAME
     global LOG_LEVEL
     global ASSETS_MAX_AGE
-
-    logger = logging.getLogger(__name__)
+    global AWS_DEFAULT_REGION
 
     if deployment_target == 'production':
         S3_BUCKET = PRODUCTION_S3_BUCKET
@@ -180,11 +179,11 @@ def configure_targets(deployment_target):
         S3_DEPLOY_URL = 's3://%s/%s' % (S3_BUCKET, PROJECT_SLUG)
         SERVERS = PRODUCTION_SERVERS
         SERVER_BASE_URL = 'http://%s/%s' % (SERVERS[0], PROJECT_SLUG)
-        logger.warn(SERVER_BASE_URL)
         SERVER_LOG_PATH = '/var/log/%s' % PROJECT_FILENAME
         LOG_LEVEL = logging.WARNING
         DEBUG = False
         ASSETS_MAX_AGE = 86400
+        AWS_DEFAULT_REGION = 'us-east-2' # because Ben, who lives in Ohio, wanted to make deploys faster and put the bucket there
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
         S3_BASE_URL = '//%s/%s' % (S3_BUCKET, PROJECT_SLUG)
