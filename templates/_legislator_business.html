@@ -1,0 +1,10 @@
+{% if business|is_really_iterable == True %}
+    <h5>Personal businesses</h5>
+    <ul class="business business-from-employment">
+    {% for business_type in business %}
+        {% for business_particular in business[business_type] %}
+            <li data-sheet="{{business_type}}">{{ business_particular }}</li>
+        {% endfor %}
+    {% endfor %}
+    </ul>
+{% endif %}

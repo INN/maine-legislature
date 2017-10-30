@@ -76,19 +76,6 @@ def get_legislator_income_by_slug(slug):
                     # + format_zip(row['Zip_of_Self_Employment'])
                 )
 
-    for row in copy['income_business']:
-        if row['sh_number'] == leg_id:
-            try:
-                income['income_business']
-            except KeyError:
-                income['income_business'] = []
-
-            if row['Name_of_Business'] != u'':
-                temporary = row['Name_of_Business']
-                if row['City_of_Business']:
-                    temporary += ', ' + row['City_of_Business']
-                income['income_business'].append(temporary)
-
     for row in copy['income_law']:
         if row['sh_number'] == leg_id:
             try:
@@ -158,6 +145,28 @@ def get_legislator_income_by_slug(slug):
                 income['zgifts'].append(row['Source_of_Gift'] + ' (gifts)')
 
     return income
+
+def get_legislator_business_by_slug(slug):
+    """
+    Break this out from get_legislator_income_by slug in response to https://github.com/INN/maine-legislature/issues/82
+    """
+    copy = get_copy()
+    businesses = collections.OrderedDict()
+    leg_id = get_legislator_id_by_slug(slug)
+
+    for row in copy['income_business']:
+        if row['sh_number'] == leg_id:
+            try:
+                businesses['income_business']
+            except KeyError:
+                businesses['income_business'] = []
+
+            if row['Name_of_Business'] != u'':
+                temporary = row['Name_of_Business']
+                if row['City_of_Business']:
+                    temporary += ', ' + row['City_of_Business']
+                businesses['income_business'].append(temporary)
+    return businesses
 
 
 def get_legislator_positions_by_slug(slug):
