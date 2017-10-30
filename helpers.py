@@ -142,7 +142,7 @@ def get_legislator_income_by_slug(slug):
                 income['zgifts'] = []
 
             if row['Source_of_Gift'] != u'':
-                income['zgifts'].append(row['Source_of_Gift'] + ' (gifts)')
+                income['zgifts'].append(row['Source_of_Gift'] + ' (gift)')
 
     return income
 
