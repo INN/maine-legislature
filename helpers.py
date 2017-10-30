@@ -356,7 +356,8 @@ def leg_bills_count(leg_id):
     copy = get_copy()
     for bill in copy['bills']:
         if bill['sh_number'] == leg_id:
-            counter = counter + 1
+            if bill['ld_num'] != u'':
+                counter = counter + 1
 
     return counter
 
