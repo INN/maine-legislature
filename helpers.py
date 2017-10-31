@@ -170,25 +170,12 @@ def get_legislator_business_by_slug(slug):
 
 
 def get_legislator_positions_by_slug(slug):
+    """
+    positions for nonprofits and suchlike
+    """
     copy = get_copy()
     positions = {}
     leg_id = get_legislator_id_by_slug(slug)
-
-    for row in copy['position_political']:
-        if row['sh_number'] == leg_id:
-            try:
-                positions['position_political']
-            except KeyError:
-                positions['position_political'] = []
-
-            if row['Name_of_Committee'] != u'':
-                if row['Name_of_Official'] == u'':
-                    # the official is the legislator,
-                    # per https://github.com/INN/maine-legislature/issues/68
-                    positions['position_political'].append(
-                        row['Title_in_Committee'] + ', ' +
-                        row['Name_of_Committee']
-                    )
 
     for row in copy['position_org']:
         if row['sh_number'] == leg_id:
@@ -211,6 +198,32 @@ def get_legislator_positions_by_slug(slug):
 
     return positions
 
+def get_legislator_political_positions_by_slug(slug):
+    """
+    Get just this legislator's political positions
+    https://github.com/INN/maine-legislature/issues/82
+    """
+    copy = get_copy()
+    political_positions = {}
+    leg_id = get_legislator_id_by_slug(slug)
+
+    for row in copy['position_political']:
+        if row['sh_number'] == leg_id:
+            try:
+                political_positions['position_political']
+            except KeyError:
+                political_positions['position_political'] = []
+
+            if row['Name_of_Committee'] != u'':
+                if row['Name_of_Official'] == row['sh_name']:
+                    # the official is the legislator,
+                    # per https://github.com/INN/maine-legislature/issues/68
+                    political_positions['position_political'].append(
+                        row['Title_in_Committee'] + ', ' +
+                        row['Name_of_Committee']
+                    )
+
+    return political_positions
 
 def get_legislator_family_by_slug(slug):
     copy = get_copy()

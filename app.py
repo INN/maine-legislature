@@ -20,7 +20,7 @@ from helpers import slugify, rep_sen, format_district, format_zip, \
     is_really_iterable, get_legislator_slugs, leg_bills_count, \
     get_legislator_by_slug, get_legislator_income_by_slug, \
     get_legislator_positions_by_slug, get_legislator_family_by_slug, \
-    get_legislator_business_by_slug
+    get_legislator_business_by_slug, get_legislator_political_positions_by_slug
 
 app = Flask(__name__)
 app.debug = app_config.DEBUG
@@ -54,6 +54,7 @@ for slug in legislator_slugs:
         context['income'] = get_legislator_income_by_slug(slug)
         context['business'] = get_legislator_business_by_slug(slug)
         context['positions'] = get_legislator_positions_by_slug(slug)
+        context['political_positions'] = get_legislator_political_positions_by_slug(slug)
         context['family'] = get_legislator_family_by_slug(slug)
         return make_response(render_template('legislator.html', **context))
 

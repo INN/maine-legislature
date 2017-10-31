@@ -1,0 +1,10 @@
+{% if political_positions|is_really_iterable == True %}
+    <h3>Other political positions</h3>
+    <ul class="positions">
+    {% for position_type in political_positions %}
+        {% for position_particular in political_positions[position_type] %}
+            <li data-sheet="{{ position_type }}">{{ position_particular }}</li>
+        {% endfor %}
+    {% endfor %}
+    </ul>
+{% endif %}
