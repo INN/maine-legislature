@@ -302,7 +302,7 @@ def get_legislator_family_by_slug(slug):
                 family['position_political'] = []
 
             if row['Name_of_Committee'] != u'':
-                if row['Name_of_Official'] != u'':
+                if row['Name_of_Official'] != u'' and row['Name_of_Official'] != row['sh_name']:
                     # the official is the legislator,
                     # per https://github.com/INN/maine-legislature/issues/68
                     family['position_political'].append(
