@@ -1,5 +1,5 @@
 {% if business|is_really_iterable == True %}
-    <h5>Personal businesses</h5>
+    <h3>Businesses owned by self or family</h3>
     <ul class="business business-from-employment">
     {% for business_type in business %}
         {% for business_particular in business[business_type] %}
