@@ -36,7 +36,7 @@
         </ul>
         <ul class="social-links">
             <li class="twitter"><a rel="external" href="http://twitter.com/intent/tweet?text={{ COPY.share.twitter_text|urlencode }}%20{{ SHARE_URL|urlencode }}&amp;via={{ COPY.share.twitter_handle|urlencode }}" alt="Share on Twitter" target="_blank" onclick="ANALYTICS.clickTweet('nav');">Share This Page On Twitter</a></li>
-            <li class="facebook"><a rel="external" href="https://www.facebook.com/dialog/feed?name={{ SHARE_URL|urlencode }}&amp;link={{ COPY.share.facebook_title|urlencode }}&amp;picture={{ COPY.share.facebook_image_url|urlencode }}&amp;redirect_uri={{ COPY.share.facebook_share_url|urlencode }}&amp;href={{ COPY.share.facebook_share_url|urlencode }}&amp;app_id={{ COPY.share.facebook_app_id|urlencode }}" alt="Share on Facebook" target="_blank" onclick="ANALYTICS.clickFacebook('nav');">Like This Page On Facebook</a></li>
+            <li class="facebook"><a rel="external" href="{{ COPY.share.facebook_page_url }}" alt="Share on Facebook" target="_blank" onclick="ANALYTICS.clickFacebook('nav');">Like This Page On Facebook</a></li>
         </ul>
     </nav>
 
